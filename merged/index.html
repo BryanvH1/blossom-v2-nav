@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Blossom V2 Navigation, Merged</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;600&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
 html{color-scheme:light dark;height:100%}body{margin:0}[hidden]{display:none!important}
 :root{
@@ -16,6 +16,9 @@ html{color-scheme:light dark;height:100%}body{margin:0}[hidden]{display:none!imp
   --moved:#fff4d6; --moved-ink:#7a5200;
   --john:#e6eefb; --john-ink:#1f4a8a;
   --alert:#fdecea; --alert-ink:#9a2a1c;
+  --honey:#cf9737; --honey-bg:#fbefd9; --honey-ink:#8a5f1c; --honey-line:#e9cf9c;
+  --cran:#a13a44; --cran-bg:#f8e6e7; --cran-ink:#8f2f39;
+  --ice:#235f8a; --ice-bg:#e6f1f8; --ice-mid:#7d9ab3; --sunken:#f4f0e7; --line-strong:#c9d1c4;
   --phone:#0f1a13; --shadow:0 18px 40px rgba(20,40,25,.18);
   --display:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   --body:"Source Sans 3",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -28,6 +31,9 @@ html{color-scheme:light dark;height:100%}body{margin:0}[hidden]{display:none!imp
     --moved:#3b3012; --moved-ink:#f0d48a;
     --john:#1b2a40; --john-ink:#a9c6f2;
     --alert:#3a1d19; --alert-ink:#f2b2a8;
+  --honey:#d9a54a; --honey-bg:#3a2d14; --honey-ink:#f0cf8f; --honey-line:#6b5426;
+  --cran:#c4505b; --cran-bg:#3a1d21; --cran-ink:#f1aab1;
+  --ice:#8cc0e6; --ice-bg:#16283a; --ice-mid:#5f87a8; --sunken:#1c261e; --line-strong:#3d4a40;
     --phone:#050906; --shadow:0 18px 40px rgba(0,0,0,.5);
   }
 }
@@ -38,6 +44,9 @@ html{color-scheme:light dark;height:100%}body{margin:0}[hidden]{display:none!imp
   --moved:#3b3012; --moved-ink:#f0d48a;
   --john:#1b2a40; --john-ink:#a9c6f2;
   --alert:#3a1d19; --alert-ink:#f2b2a8;
+  --honey:#d9a54a; --honey-bg:#3a2d14; --honey-ink:#f0cf8f; --honey-line:#6b5426;
+  --cran:#c4505b; --cran-bg:#3a1d21; --cran-ink:#f1aab1;
+  --ice:#8cc0e6; --ice-bg:#16283a; --ice-mid:#5f87a8; --sunken:#1c261e; --line-strong:#3d4a40;
   --phone:#050906; --shadow:0 18px 40px rgba(0,0,0,.5);
 }
 *{box-sizing:border-box}
@@ -74,25 +83,121 @@ h1{font-family:var(--display);font-size:clamp(26px,3.4vw,38px);font-weight:800;l
 .appbar .av{margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font:800 12px var(--display)}
 .view{flex:1;overflow:auto;padding:12px 14px 16px;-webkit-overflow-scrolling:touch}
 
-/* today zones */
-.z-date{font:600 12px var(--display);color:var(--muted)}
-.z-head{font:800 19px/1.2 var(--display);margin:4px 0 12px;text-wrap:balance}
-.z-label{display:flex;align-items:center;gap:6px;font:700 11px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
-.z-label .count{background:var(--alert);color:var(--alert-ink);border-radius:999px;padding:0 7px;letter-spacing:0}
-.card{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:6px;background:var(--surface)}
-.card.primary{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
-.card b{display:block;font:700 14px var(--display)}
-.card p{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
-.card .btn{display:inline-block;margin-top:8px;background:var(--accent);color:#fff;border-radius:10px;padding:6px 12px;font:700 12.5px var(--display)}
-:root[data-theme="dark"] .card .btn{color:#0b1a0f}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .card .btn{color:#0b1a0f}}
-.card .who{font:600 11px var(--display);color:var(--accent)}
-.hero{border-radius:14px;padding:12px;background:var(--accent-soft);color:var(--accent-ink)}
-.hero b{display:block;font:800 15px var(--display)}
-.hero p{margin:2px 0 0;font-size:12.5px}
-.rows{list-style:none;margin:0;padding:0;font-size:13px}
-.rows li{padding:6px 2px;border-bottom:1px solid var(--line)}
-.rows li:last-child{border-bottom:0}
+/* today screens: graphics after John's Round 3–5 homes (Figtree, honey / cranberry / ice) */
+.screen{font-family:"Figtree",var(--body)}
+.screen .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.z-date{font:600 12px "Figtree",var(--body);color:var(--muted)}
+.z-head{font:800 21px/1.18 "Figtree",var(--display);margin:4px 0 14px;letter-spacing:-.01em;text-wrap:balance}
+.z-head .ask{display:block;color:var(--honey-ink)}
+.zcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:12px}
+.zcard.warm{border-color:var(--honey-line)}
+.zhead{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.zhead b{font:800 14.5px "Figtree",var(--display)}
+.zhead .count{background:var(--honey-bg);color:var(--honey-ink);border-radius:999px;font:700 11px "Figtree";padding:1px 7px}
+.zhead .r{margin-left:auto;font-size:11.5px;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;font:700 10.5px "Figtree",var(--display);padding:2px 8px;white-space:nowrap}
+.pill.wait{background:var(--honey-bg);color:var(--honey-ink)}
+.pill.bad{background:var(--cran-bg);color:var(--cran-ink)}
+.pill.ok{background:var(--accent-soft);color:var(--accent-ink)}
+.pill.ice{background:var(--ice-bg);color:var(--ice)}
+.lead-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lead-row .by{font-size:11.5px;color:var(--muted)}
+.lead-row .by b{color:var(--ink)}
+.lead-t{font:800 16px "Figtree",var(--display);margin:6px 0 2px}
+.from{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted)}
+.dot-av{width:20px;height:20px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;font:700 9.5px "Figtree";flex:none;box-shadow:0 0 0 2px var(--surface)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--line);margin:10px 0 8px}
+.facts div{padding:7px 6px 7px 0;font-size:10.5px;color:var(--muted)}
+.facts div+div{border-left:1px solid var(--line);padding-left:8px}
+.facts b{display:block;font:700 13px "Figtree";color:var(--ink);margin-top:1px}
+.why-line{display:flex;gap:6px;font-size:11.5px;color:var(--muted);margin-bottom:10px}
+.why-line svg{width:13px;height:13px;flex:none;color:var(--ice);margin-top:2px}
+.acts{display:flex;gap:6px}
+.bigbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--green-deep);color:#fff;border-radius:12px;padding:10px;font:700 13.5px "Figtree";box-shadow:0 6px 14px -6px rgba(0,104,56,.6)}
+.bigbtn svg{width:15px;height:15px}
+.ghost{display:flex;align-items:center;justify-content:center;background:var(--surface-2);border-radius:12px;padding:10px 14px;font:700 13px "Figtree";color:var(--ink)}
+.mini{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.mini .sq{width:28px;height:28px;border-radius:8px;background:var(--surface-2);display:grid;place-items:center;flex:none;color:var(--muted)}
+.mini .sq svg{width:14px;height:14px}
+.mini b{display:block;font:700 13px "Figtree"}
+.mini span.s{font-size:11.5px;color:var(--muted);line-height:1.25}
+.mini .go{margin-left:auto;background:var(--surface-2);border-radius:9px;padding:6px 10px;font:700 12px "Figtree";flex:none}
+.frost{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--surface);margin-bottom:12px}
+.frost .sky{background:radial-gradient(120% 90% at 80% 0%,#2a4a63 0%,#13251c 55%,#0d1a13 100%);color:#fff;padding:12px 14px 14px}
+.frost .sky .pill{background:rgba(255,255,255,.14);color:#fff}
+.frost .deg{font:800 50px/1 "Figtree";margin:10px 0 4px;letter-spacing:-.02em}
+.frost .deg sup{font-size:20px;vertical-align:28px}
+.frost .sky b{display:block;font:700 13px "Figtree"}
+.frost .sky small{font-size:11.5px;opacity:.8}
+.frost .plan{padding:12px 12px 4px}
+.plan-h{display:flex;justify-content:space-between;align-items:baseline;font:800 14px "Figtree"}
+.plan-h small{font:500 11px "Figtree";color:var(--muted)}
+.chart{display:block;width:100%;height:auto;margin:4px 0 2px;overflow:visible}
+.chart text{font:600 8.5px "Figtree";fill:var(--muted)}
+.chart .lbl{font-weight:700;fill:var(--ice)}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:grid;grid-template-columns:22px 1fr;gap:2px 8px;padding:9px 0;border-top:1px solid var(--line)}
+.steps .num{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font:700 10.5px "Figtree";grid-row:span 3}
+.steps .num.wait{border-color:var(--honey);background:var(--honey-bg);color:var(--honey-ink)}
+.steps .num.ice{border-color:var(--ice-mid);background:var(--ice-bg);color:var(--ice)}
+.steps .when{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.steps b{font:700 13px "Figtree"}
+.steps span.s{font-size:11.5px;color:var(--muted)}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:64px 30px 1fr;align-items:start;gap:6px;padding:8px 0;border-top:1px solid var(--line)}
+.tl li:first-child{border-top:0}
+.tl .t{font-size:10.5px;color:var(--muted);line-height:1.3}
+.tl b{display:block;font:700 13px "Figtree"}
+.tl span.s{font-size:11.5px;color:var(--muted)}
+.tl .ok-t{color:var(--accent)}
+.stack{display:flex}
+.stack .dot-av+.dot-av{margin-left:-7px}
+.job{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--surface);margin-bottom:12px}
+.job .band{background:linear-gradient(160deg,#2c4a2f,#0f2216);color:#fff;padding:10px 12px 12px}
+.job .band .row{display:flex;justify-content:space-between}
+.job .band .pill{background:rgba(255,255,255,.16);color:#fff}
+.job .band h3{font:800 19px "Figtree";margin:18px 0 0}
+.job .in{padding:10px 12px 12px}
+.job .meta{font-size:12px;color:var(--muted);margin-bottom:8px}
+.dose{background:var(--sunken);border-radius:14px;padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;margin-bottom:10px}
+.dose small{display:block;font-size:10.5px;color:var(--muted)}
+.dose .big{font:800 30px/1 "Figtree";letter-spacing:-.02em}
+.dose .big span{font-size:13px;font-weight:600}
+.dose .rt{text-align:right}
+.dose .rt b{font:800 15px "Figtree"}
+.dose .line{grid-column:1/-1;border-top:1px solid var(--line);margin:2px 0}
+.dose .warn{color:var(--cran-ink);font-weight:800}
+.gng-h{display:flex;justify-content:space-between;font:800 13.5px "Figtree";margin:4px 0 6px}
+.gng-h small{font:500 11px "Figtree";color:var(--muted)}
+.gng{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.gng div{border-radius:11px;padding:7px 9px;font-size:10.5px}
+.gng div b{display:block;font:700 12.5px "Figtree";color:var(--ink)}
+.gng .ok{background:var(--accent-soft);color:var(--accent-ink)}
+.gng .later{border:1.5px dashed var(--line);color:var(--muted)}
+.stepper{display:grid;grid-template-columns:repeat(4,1fr);margin:8px 0 2px;position:relative}
+.stepper::before{content:"";position:absolute;left:12%;right:12%;top:10px;border-top:1.5px solid var(--line)}
+.stepper div{position:relative;font-size:10.5px;color:var(--muted);text-align:left}
+.stepper i{display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--surface);border:1.5px solid var(--line);font:700 10px "Figtree";font-style:normal;color:var(--ink);margin-bottom:4px}
+.stepper .on i{background:var(--honey);border-color:var(--honey);color:#fff}
+.stepper b{display:block;font:700 11.5px "Figtree";color:var(--ink)}
+.svc{border:1px solid var(--honey-line);background:linear-gradient(var(--surface),var(--surface)) padding-box;border-radius:18px;padding:12px;margin-bottom:12px}
+.svc .tline{display:grid;grid-template-columns:repeat(3,1fr);background:var(--sunken);border-radius:12px;padding:10px;margin:10px 0;position:relative}
+.svc .tline div{font-size:10.5px;color:var(--muted);line-height:1.3}
+.svc .tline i{display:block;width:10px;height:10px;border-radius:50%;border:2px solid var(--ink);margin-bottom:4px}
+.svc .tline div:first-child i{background:var(--honey);border-color:var(--honey)}
+.svc .tline b{display:block;font-size:11.5px;color:var(--ink)}
+.check{list-style:none;margin:8px 0 0;padding:0}
+.check li{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);font:600 13px "Figtree"}
+.check li::before{content:"";width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line-strong);flex:none}
+.check li small{margin-left:auto;font:500 11px "Figtree";color:var(--muted)}
+.fleet{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.bar2{margin:8px 0 2px}
+.bar2 .lab{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:3px}
+.bar2 .lab b{color:var(--ink)}
+.bar2 .track{height:9px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.bar2 .fill{height:100%;border-radius:999px;background:var(--green)}
+.bar2 .fill.prev{background:var(--line-strong)}
+.bar2 .fill.honey{background:var(--honey)}
 
 /* area page */
 .back{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--accent);font:600 14px var(--display);padding:2px 0;cursor:pointer}
@@ -267,6 +372,7 @@ h1{font-family:var(--display);font-size:clamp(26px,3.4vw,38px);font-weight:800;l
               <li>Today layout: Headline, Needs you, Hero, Today, Since you last looked</li>
               <li>Zero route changes; old names stay findable in search</li>
               <li>Desktop top bar with area menus</li>
+              <li>The phone's Today graphics: frost plan chart, Needs you card, crew timeline, the applicator's go/no-go and the mechanic's service checklist</li>
             </ul>
           </div>
           <div>
@@ -483,61 +589,233 @@ const LOGS = {
 
 // tab: [label, icon, area, pageIndex]
 const ROLES = [
-  {id:'farm', name:'Crop Manager', seats:'Owner, Operations Mgr, Crop Mgr, Operator, Application Foreman', set:'Run the farm', av:'CM',
+  {id:'farm', name:'Crop Manager', seats:'Owner, Operations Mgr, Crop Mgr, Operator, Application Foreman', set:'Run the farm', av:'CM', date:'Wed, Oct 7',
    tabs:[['Today','today','today',0],'+',['Apply','apply','apply',0],'more'], beds:true,
    areas:{today:[0,1,3,4],beds:'all',apply:'all',water:'all',harvest:'all',shop:[1],reports:'all'},
-   log:['scout','apply','water','sand','yield','maint'],
-   home:{head:'Frost tonight, 27°F at 5 AM. A spray order waits on your approval.',
-     needs:[{t:'Approve: Altacor on Long Bog',s:'Requested 5:52 AM · Work order 214',btn:'Approve',who:'Waiting on you'},{t:'Record missing a license number',s:'Apply ▸ Records · Aug 28',btn:'Fix'}],
-     hero:['Tonight\'s frost plan','Sprinklers on 12 beds by 10:45 PM. Pump P3 back from service by 10 AM.'],
-     today:['Harvest crew on Long Bog, 7 AM','Pump P3 service, 8 to 10 AM','Fertilizer on North Marsh, 2 PM'],
-     since:['Tissue results in: 3 beds low on nitrogen','2 scouting reports filed']}},
-  {id:'field', name:'Applicator', seats:'Applicator, Field Applicator', set:'Field', av:'AP',
+   log:['scout','apply','water','sand','yield','maint']},
+  {id:'field', name:'Applicator', seats:'Applicator, Field Applicator', set:'Field', av:'AP', date:'Tue, Jul 14',
    tabs:[['Today','today','today',0],['Jobs','jobs','today',2],'+',['Map','map','beds',1],'more'],
    areas:{today:[0,2,3,4],beds:[0,1],apply:[0],water:[0],shop:[1]},
-   log:['finish','water','issue'],
-   home:{head:'Tonight\'s Altacor is a go. Post the signs by 8:45 PM.',
-     needs:[{t:'Start job: Altacor on Long Bog',s:'LB-1 to LB-5 · 46.3 ac · Work order 214',btn:'Start',who:'Your next job'}],
-     hero:['Go / no-go','Wind 4 mph, no rain for 12 h, bees moved off LB-3.'],
-     today:['Mix at the shed, 8 PM','Re-entry signs up by 8:45 PM'],
-     since:['Last night\'s job closed by the Crop Manager']}},
-  {id:'mech', name:'Mechanic', seats:'Mechanic', set:'Shop (Jobs)', av:'ME',
+   log:['finish','water','issue']},
+  {id:'mech', name:'Mechanic', seats:'Mechanic', set:'Shop (Jobs)', av:'ME', date:'Wed, Oct 7',
    tabs:[['Today','today','today',0],['Jobs','jobs','today',2],'+',['Machines','machines','shop',1],'more'],
    areas:{today:[0,2],shop:[0,1]},
-   log:['service','hours','issue'],
-   home:{head:'Frost tonight, and Pump P3 is 12 days overdue. Service it this morning.',
-     needs:[{t:'250-hour service: Pump P3',s:'Feeds LB-1, LB-2 and LB-5 on tonight\'s frost',btn:'Start',who:'Your next job'}],
-     hero:['3 machines need you this week','P3 overdue, loader due Friday, ATV tire flagged.'],
-     today:['P3 service, 8 to 10 AM','Loader grease, after lunch'],
-     since:['Applicator flagged a sprayer nozzle']}},
-  {id:'eqf', name:'Equipment Foreman', seats:'Equipment Foreman, Equipment & Building Mgr', set:'Shop (Maintenance)', av:'EF',
+   log:['service','hours','issue']},
+  {id:'eqf', name:'Equipment Foreman', seats:'Equipment Foreman, Equipment & Building Mgr', set:'Shop (Maintenance)', av:'EF', date:'Wed, Oct 7',
    tabs:[['Today','today','today',0],['Maintenance','shop','shop',0],'+',['Machines','machines','shop',1],'more'],
    areas:{today:[0,3],shop:'all',reports:[0]},
-   log:['maint','hours','issue'],
-   home:{head:'Pump P3 has to be back before tonight\'s frost.',
-     needs:[{t:'Approve: replace sprayer nozzles',s:'Requested by the applicator · $140',btn:'Approve',who:'Waiting on you'}],
-     hero:['Service due','P3 12 days over, loader in 3 days, 2 trucks this month.'],
-     today:['Mechanic on P3, 8 to 10 AM','Parts pickup in town, 1 PM'],
-     since:['1 machine problem reported','2 services closed']}},
-  {id:'admin', name:'Admin', seats:'Admin seat, Office Manager', set:'Office', av:'AD',
+   log:['maint','hours','issue']},
+  {id:'admin', name:'Admin', seats:'Admin seat, Office Manager', set:'Office', av:'AD', date:'Wed, Oct 7',
    tabs:[['Today','today','today',0],['Work orders','orders','today',1],'+',['Reports','reports','reports',0],'more'],
    areas:{today:[0,1,3,4],beds:'all',apply:'all',water:'all',harvest:'all',shop:'all',reports:'all'},
-   log:['scout','apply','water','sand','yield','maint'],
-   home:{head:'Two records need fixing before the spray report.',
-     needs:[{t:'Record missing a license number',s:'Apply ▸ Records · Aug 28',btn:'Fix'},{t:'Delivery ticket without a bed',s:'Harvest ▸ Deliveries · Oct 6',btn:'Fix'}],
-     hero:['Spray report: 31 of 33 records complete','Due Jan 31. You can fix records; a manager approves.'],
-     today:['Enter yesterday\'s yields','Upload this week\'s soil tests'],
-     since:['4 new work orders','1 delivery imported']}},
-  {id:'fin', name:'Finance Manager', seats:'Finance Mgr, Accountant', set:'Office (no +)', av:'FM',
+   log:['scout','apply','water','sand','yield','maint']},
+  {id:'fin', name:'Finance Manager', seats:'Finance Mgr, Accountant', set:'Office (no +)', av:'FM', date:'Wed, Oct 7',
    tabs:[['Today','today','today',0],['Reports','reports','reports',0],'more'],
    areas:{today:[0],beds:[0],apply:[0],water:[0],harvest:'all',shop:[1],reports:'all'},
-   log:[],
-   home:{head:'Harvest is 43% in. Deliveries are tracking 6% ahead of last year.',
-     needs:[],
-     hero:['Barrels to date','43% harvested. Exports ready for the October close.'],
-     today:['Delivery statement from the handler expected'],
-     since:['12 loads delivered','Charts updated overnight']}}
+   log:[]}
 ];
+
+// ---- Today graphics (after John's Round 3–5 homes) ----
+const ic = {
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  warn:'<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17.5v.5"/></svg>',
+  snow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M3.5 7l17 10M3.5 17l17-10"/></svg>',
+  doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg>',
+  leaf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19l7-7"/></svg>',
+  wave:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l3-6 4 12 3-6h5"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>',
+  wrench:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L13 18a2.1 2.1 0 0 1-3-3l6.7-6.7z"/><path d="M4 20l4-4"/></svg>',
+  sign:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="11" rx="1.5"/><path d="M12 15v6M8 21h8"/></svg>'
+};
+const av = (t, c) => `<span class="dot-av" style="background:${c}">${t}</span>`;
+const C = {a:'#b0573a', b:'#2f6b6f', m:'#5b3f8a', d:'#3c5d8c', t:'#7a6a2b', s:'#8a3b5c'};
+const head = (a, b) => `<div class="z-head">${a}${b?`<span class="ask">${b}</span>`:''}</div>`;
+const mini = (icon, t, s, btn) => `<div class="mini"><span class="sq">${ic[icon]}</span><span><b>${t}</b><span class="s">${s}</span></span>${btn?`<span class="go">${btn}</span>`:''}</div>`;
+const needs = (n, inner) => `<div class="zcard warm"><div class="zhead"><b>Needs you</b><span class="count">${n}</span><span class="r">Most urgent first</span></div>${inner}</div>`;
+
+// Overnight temperature curve, 6 AM today to 9 AM tomorrow, with numbered plan markers.
+function frostChart(){
+  const W = 300, H = 124, x0 = 6, x1 = 294, top = 26, bot = 96;
+  const pts = [[0,38],[3,46],[7,54],[10,50],[13,41],[15.3,32],[18,29.5],[21,28],[23,27],[25,30.5],[26.2,32],[27,35]];
+  const X = h => x0 + (h / 27) * (x1 - x0), Y = t => top + (56 - t) / (56 - 25) * (bot - top);
+  const P = pts.map(([h, t]) => [X(h), Y(t)]);
+  let d = `M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;
+  for (let i = 0; i < P.length - 1; i++){
+    const p0 = P[i-1] || P[i], p1 = P[i], p2 = P[i+1], p3 = P[i+2] || p2;
+    const c1 = [p1[0] + (p2[0]-p0[0])/6, p1[1] + (p2[1]-p0[1])/6], c2 = [p2[0] - (p3[0]-p1[0])/6, p2[1] - (p3[1]-p1[1])/6];
+    d += ` C${c1.map(v=>v.toFixed(1))} ${c2.map(v=>v.toFixed(1))} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  const y32 = Y(32), xa = X(15.3), xb = X(26.2), xmin = X(23), ymin = Y(27);
+  const marks = [[0.67,'Now','now'],[4,'1',''],[11,'2','wait'],[16.75,'3','ice'],[25.5,'4','ice']];
+  const mk = marks.map(([h, t, k]) => {
+    const x = X(h);
+    if (k === 'now') return `<line x1="${x}" y1="12" x2="${x}" y2="${Y(38.4)}" stroke="var(--ink)" stroke-width="1.2"/><rect x="${x-13}" y="2" width="26" height="13" rx="6.5" fill="var(--ink)"/><text x="${x}" y="11.5" text-anchor="middle" style="fill:var(--surface);font-weight:800">Now</text>`;
+    const stroke = k === 'wait' ? 'var(--honey)' : k === 'ice' ? 'var(--ice-mid)' : 'var(--line-strong)';
+    const fill = k === 'wait' ? 'var(--honey-bg)' : k === 'ice' ? 'var(--ice-bg)' : 'var(--surface)';
+    return `<line x1="${x}" y1="15" x2="${x}" y2="${bot}" stroke="${stroke}" stroke-dasharray="2 2"/><circle cx="${x}" cy="8.5" r="6.5" fill="${fill}" stroke="${stroke}" stroke-width="1.3"/><text x="${x}" y="11.5" text-anchor="middle" style="fill:var(--ink);font-weight:800">${t}</text>`;
+  }).join('');
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Temperature falls below 32°F at about 9 PM, bottoms at 27°F at 5 AM, and is back above freezing by 8 AM">
+    <clipPath id="below"><rect x="0" y="${y32}" width="${W}" height="${H}"/></clipPath>
+    <path d="${d} L${x1},${bot} L${x0},${bot} Z" fill="var(--ice-bg)" clip-path="url(#below)"/>
+    <line x1="${x0}" y1="${y32}" x2="${x1}" y2="${y32}" stroke="var(--ice-mid)" stroke-dasharray="3 3"/>
+    <text x="${x0}" y="${y32+10}" class="lbl">32°F</text>
+    ${mk}
+    <path d="${d}" fill="none" stroke="var(--ice)" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="${P[0][0]}" cy="${P[0][1]}" r="3.2" fill="var(--ink)"/>
+    <circle cx="${xmin}" cy="${ymin}" r="3.6" fill="var(--ice)" stroke="var(--surface)" stroke-width="1.5"/>
+    <text x="${xmin-4}" y="${ymin+12}" text-anchor="end" style="fill:var(--ink);font-weight:800">27°F at 5 AM</text>
+    <text x="${(xa+xb)/2+10}" y="${y32-14}" text-anchor="middle" class="lbl">Below 32°F</text>
+    <text x="${(xa+xb)/2+10}" y="${y32-4}" text-anchor="middle" class="lbl">10 h 50 min</text>
+    ${[['6 AM',0],['Noon',6],['6 PM',12],['12 AM',18],['9 AM',27]].map(([t,h]) => `<text x="${X(h)}" y="${H-2}" text-anchor="${h===0?'start':h===27?'end':'middle'}">${t}</text>`).join('')}
+  </svg>`;
+}
+
+const HOMES = {
+  farm: () => `
+    <div class="z-date">Wed, Oct 7 · 6:40 AM · 38°F, clear</div>
+    ${head('Frost tonight, and two crews on Long Bog.', 'A flood on Frog Foot needs your yes by 5 PM.')}
+    ${needs(3, `
+      <div class="lead-row"><span class="pill wait">${ic.clock} Waiting on you</span><span class="by">by <b>5:00 PM</b></span></div>
+      <div class="lead-t">Flood FF-1 tonight</div>
+      <div class="from">${av('W', C.d)} Water lead asked 5:52 AM · Work order 214</div>
+      <div class="facts"><div>Full by<b>9:00 PM</b></div><div>Harvest<b>Sat, Oct 10</b></div><div>Frog Foot<b>FF-1, 8.7 ac</b></div></div>
+      <div class="why-line">${ic.snow}<span>Under water, FF-1 is safe from the frost without sprinklers.</span></div>
+      <div class="acts"><span class="bigbtn">${ic.check} Approve flood</span><span class="ghost">Reply</span></div>
+      ${mini('doc','Application record on DT-2','Aug 28. Applicator license missing.','Fix')}
+      ${mini('leaf','Tissue results are in','3 beds low on nitrogen.','Open')}`)}
+    <div class="frost">
+      <div class="sky"><span class="pill">${ic.snow.replace('<svg','<svg width="11" height="11"')} Frost warning tonight</span>
+        <div class="deg">27<sup>°F</sup></div><b>Low around 5 AM, clear and calm</b><small>Frost night 24 of the season. 2025 had 19 by now.</small></div>
+      <div class="plan"><div class="plan-h">Tonight's frost plan <small>To Thu, 9 AM</small></div>${frostChart()}
+        <ol class="steps">
+          <li><span class="num">1</span><span class="when"><span class="mono">By 10:00 AM</span><span class="pill bad">${ic.warn} 12 days overdue</span></span><b>Pump P3 back from service</b><span class="s">Mechanic, 8 to 10. P3 feeds LB-1, LB-2 and LB-5.</span></li>
+          <li><span class="num wait">2</span><span class="when"><span class="mono">From 5:00 PM</span><span class="pill wait">${ic.clock} Waiting on you</span></span><b>FF-1 under water instead</b><span class="s">Ready for harvest, no sprinklers.</span></li>
+          <li><span class="num ice">3</span><span class="when"><span class="mono">By 10:45 PM</span><span class="pill ok">✓ P5 and P6 ready</span></span><b>Sprinklers on 12 beds</b><span class="s">Long Bog 3, Frog Foot 4, Canning 5.</span></li>
+          <li><span class="num ice">4</span><span class="when"><span class="mono">10:45 PM to 7:30 AM</span><span class="pill ok">✓ Assigned</span></span><b>Frost watch</b><span class="s">Two on watch until the all clear.</span></li>
+        </ol></div>
+    </div>
+    <div class="zcard"><div class="zhead"><b>Today</b><span class="r">8 crews and jobs</span></div>
+      <ul class="tl">
+        <li><span class="t mono">6:45 AM</span><span class="stack">${av('A',C.a)}${av('B',C.b)}</span><span><b>Crew huddle at the shop</b><span class="s ok-t">Crew A clocked in 6:31 AM</span></span></li>
+        <li><span class="t mono">7:00 AM<br>to 3:00 PM</span><span>${av('A',C.a)}</span><span><b>Crew A harvests LB-3</b><span class="s">6 people</span></span></li>
+        <li><span class="t mono">8:00 AM<br>to 10:00 AM</span><span>${av('M',C.m)}</span><span><b>Pump P3 service</b><span class="s">250-hour service, Long Bog west</span></span></li>
+        <li><span class="t mono">8:30 AM<br>to 5:00 PM</span><span class="stack">${av('T',C.t)}${av('S',C.s)}</span><span><b>Loads to receiving</b><span class="s">About every 40 min</span></span></li>
+        <li><span class="t mono">Tonight</span><span class="stack">${av('W',C.d)}${av('M',C.m)}</span><span><b>The frost night</b><span class="s">In the frost plan</span></span></li>
+      </ul></div>
+    <div class="zcard"><div class="zhead"><b>Since you last looked</b><span class="r">Tue 2:10 PM</span></div>
+      <ul class="tl">
+        <li><span class="t mono">6:00 AM</span><span>${av('!',C.d)}</span><span><b>Frost warning for tonight</b><span class="s">From NOAA. Blossom opened the frost plan.</span></span></li>
+        <li><span class="t mono">Yesterday</span><span>${av('✓',C.b)}</span><span><b>13 loads delivered</b><span class="s">2 downgraded for color.</span></span></li>
+      </ul></div>`,
+
+  field: () => `
+    <div class="z-date">Tue, Jul 14 · 6:40 AM · 66°F, clear</div>
+    ${head('Tonight\'s Altacor is a go.', 'Post the signs by 8:45 PM.')}
+    <div class="job">
+      <div class="band"><div class="row"><span class="pill">My next job</span><span class="pill">✓ Approved</span></div><h3>Altacor on Long Bog</h3></div>
+      <div class="in">
+        <div class="meta">WO 131 · LB-1 to LB-5 · 46.3 ac · Chemigation for fruitworm</div>
+        <div class="dose">
+          <div><small>Put in</small><span class="big">208 <span>fl oz</span></span></div>
+          <div class="rt"><b>1.63 gal</b><small>4.5 fl oz/ac × 46.3 ac</small></div>
+          <div class="line"></div>
+          <div><small>Run</small><b>8:45 to 9:45 PM</b></div>
+          <div><small>Keep out until</small><b class="warn">⊖ 1:45 AM</b></div>
+        </div>
+        <div class="gng-h">Go / no-go <small>4 go · 2 later today</small></div>
+        <div class="gng">
+          <div class="later">Pumps, 2 PM<b>Mechanic checks P4</b></div>
+          <div class="later">Bees off the bloom<b>After 8:30 PM</b></div>
+          <div class="ok">✓ Wind at 8:45 PM<b>SW 5 mph</b></div>
+          <div class="ok">✓ Rain<b>None until Thu</b></div>
+          <div class="ok">✓ Label limit<b>2 of 3 after tonight</b></div>
+          <div class="ok">✓ Pre-harvest interval<b>1 day</b></div>
+        </div>
+        <div class="acts"><span class="bigbtn">${ic.sign} Mark signs posted</span><span class="ghost">Start 8:30</span></div>
+        <div class="gng-h" style="margin-top:12px">Tonight's log <small>Saves to the spray record</small></div>
+        <div class="stepper">
+          <div class="on"><i>1</i><b>Signs</b>Not yet</div>
+          <div><i>2</i><b>Start</b>8:45 PM</div>
+          <div><i>3</i><b>Stop</b>9:45 PM</div>
+          <div><i>4</i><b>Open</b>1:45 AM</div>
+        </div>
+      </div>
+    </div>
+    <div class="zcard"><div class="zhead"><b>Later this week</b></div>
+      ${mini('cal','Fri 17 · Intrepid 2F on Frog Foot','WO 132, 8:45 PM. Waiting on approval.')}
+      ${mini('cal','Mon 20 · Flea beetle on CN-1 and CN-4','WO 133, evening, once the hives move.')}
+    </div>`,
+
+  mech: () => `
+    <div class="z-date">Wed, Oct 7 · 6:40 AM · 38°F</div>
+    ${head('Frost tonight, and Pump P3 is 12 days overdue.', 'Service it this morning. Three beds need it tonight.')}
+    ${needs(2, `
+      ${mini('wave','Beater 2 reel noise','Noted Thursday. Look at it after Crew B.','Open').replace('class="mini"','class="mini" style="border-top:0"')}
+      ${mini('cal','Truck 4 inspection','Due Fri, Oct 9, not booked.','Book')}`)}
+    <div class="svc">
+      <span class="pill bad">${ic.warn} 250-hour service, due Sep 25</span>
+      <div class="lead-t">Pump P3</div>
+      <div class="s" style="font-size:12px;color:var(--muted)">Long Bog west. It feeds <b>LB-1</b>, <b>LB-2</b> and <b>LB-5</b> on tonight's frost.</div>
+      <div class="tline">
+        <div><i></i><b class="mono">8:00 AM</b>Start in the shop</div>
+        <div><i></i><b class="mono">10:00 AM</b>Test run, back on line</div>
+        <div><i></i><b class="mono">10:45 PM</b>Sprinklers on for frost</div>
+      </div>
+      <div class="acts"><span class="bigbtn">${ic.wrench} Start P3 service</span></div>
+      <div class="zhead" style="margin:12px 0 0"><b>The checklist</b><span class="r"><span class="pill ok">✓ Parts on the shelf</span></span></div>
+      <ul class="check">
+        <li>Oil and oil filter<small>3 gal 15W-40</small></li>
+        <li>Fuel and air filters<small>2 fuel, 1 air</small></li>
+        <li>Grease the bearings<small>2 fittings</small></li>
+        <li>Impeller and wear ring<small>Inspect</small></li>
+        <li>Prime and test run<small>Log meter hours</small></li>
+      </ul>
+    </div>
+    <div class="zcard"><div class="zhead"><b>The fleet</b><span class="r">14 machines</span></div>
+      <div class="fleet"><span class="pill ok">✓ 12 ready</span><span class="pill bad">${ic.warn} P3 overdue</span><span class="pill wait">B2 to check</span></div></div>`,
+
+  eqf: () => `
+    <div class="z-date">Wed, Oct 7 · 6:40 AM · 38°F</div>
+    ${head('Pump P3 has to be back before tonight\'s frost.', 'One order waits on your approval.')}
+    ${needs(1, `
+      <div class="lead-row"><span class="pill wait">${ic.clock} Your approval</span><span class="by">by <b>2:00 PM</b></span></div>
+      <div class="lead-t">Replace sprayer nozzles</div>
+      <div class="from">${av('A',C.a)} Applicator asked 6:05 AM · Work order 219</div>
+      <div class="facts"><div>Parts<b>$140</b></div><div>Machine<b>Sprayer 2</b></div><div>Needed<b>Fri spray</b></div></div>
+      <div class="acts"><span class="bigbtn">${ic.check} Approve</span><span class="ghost">Reply</span></div>`)}
+    <div class="zcard"><div class="zhead"><b>Service due</b><span class="r">Next 30 days</span></div>
+      <div class="bar2"><div class="lab"><span>Pump P3 · 250 h</span><b style="color:var(--cran-ink)">12 days over</b></div><div class="track"><div class="fill" style="width:100%;background:var(--cran)"></div></div></div>
+      <div class="bar2"><div class="lab"><span>Loader · 500 h</span><b>in 3 days</b></div><div class="track"><div class="fill honey" style="width:90%"></div></div></div>
+      <div class="bar2"><div class="lab"><span>Truck 4 · inspection</span><b>Oct 9</b></div><div class="track"><div class="fill" style="width:60%"></div></div></div>
+    </div>
+    <div class="zcard"><div class="zhead"><b>The fleet</b><span class="r">14 machines</span></div>
+      <div class="fleet"><span class="pill ok">✓ 12 ready</span><span class="pill bad">${ic.warn} P3 overdue</span><span class="pill wait">B2 to check</span></div></div>`,
+
+  admin: () => `
+    <div class="z-date">Wed, Oct 7 · 6:40 AM</div>
+    ${head('Two records need fixing before the spray report.', 'You fix them; a manager approves.')}
+    ${needs(2, `
+      ${mini('doc','Application record on DT-2','Aug 28. Applicator license missing.','Fix').replace('class="mini"','class="mini" style="border-top:0"')}
+      ${mini('doc','Delivery ticket without a bed','Harvest ▸ Deliveries · Oct 6','Fix')}`)}
+    <div class="zcard"><div class="zhead"><b>Spray report</b><span class="r"><span class="pill wait">Due Jan 31</span></span></div>
+      <div class="bar2"><div class="lab"><span>Records complete</span><b>31 of 33</b></div><div class="track"><div class="fill" style="width:94%"></div></div></div>
+      <div class="s" style="font-size:11.5px;color:var(--muted);margin-top:6px">The two above are the only gaps.</div></div>
+    <div class="zcard"><div class="zhead"><b>Today</b></div>
+      ${mini('leaf','Enter yesterday\'s yields','12 beds picked','Start').replace('class="mini"','class="mini" style="border-top:0"')}
+      ${mini('doc','Upload this week\'s soil tests','From the lab email','Upload')}</div>`,
+
+  fin: () => `
+    <div class="z-date">Wed, Oct 7 · 6:40 AM</div>
+    ${head('Harvest is 43% in.', 'Deliveries are tracking 6% ahead of last year.')}
+    <div class="zcard"><div class="zhead"><b>Harvest</b><span class="r">Barrels to date</span></div>
+      <div class="bar2"><div class="lab"><span>2026</span><b>43% · 41,200 bbl</b></div><div class="track"><div class="fill" style="width:43%"></div></div></div>
+      <div class="bar2"><div class="lab"><span>2025 by Oct 7</span><b>37%</b></div><div class="track"><div class="fill prev" style="width:37%"></div></div></div>
+      <div class="fleet" style="margin-top:10px"><span class="pill ok">✓ 13 loads yesterday</span><span class="pill wait">2 downgraded</span></div></div>
+    <div class="zcard"><div class="zhead"><b>Since you last looked</b></div>
+      ${mini('doc','Delivery statement expected','From the handler, for the October close').replace('class="mini"','class="mini" style="border-top:0"')}
+      ${mini('leaf','Charts updated overnight','Yield by bed and variety','Open')}</div>`
+};
 
 const roleSel = document.getElementById('role');
 ROLES.forEach(r => { const o = document.createElement('option'); o.value = r.id; o.textContent = `${r.name} · ${r.set}`; roleSel.appendChild(o); });
@@ -588,20 +866,7 @@ function markTab(){
   });
 }
 
-function renderToday(){
-  const h = role.home;
-  const needs = h.needs.length
-    ? h.needs.map((n, i) => `<div class="card${i===0?' primary':''}">${n.who?`<span class="who">${n.who}</span>`:''}<b>${n.t}</b><p>${n.s}</p>${i===0?`<span class="btn">${n.btn}</span>`:''}</div>`).join('')
-    : '';
-  todayView.innerHTML = `
-    <div class="z-date">Wed, Oct 7 · 38°F, clear</div>
-    <div class="z-head">${h.head}</div>
-    ${h.needs.length ? `<div class="z-label">Needs you <span class="count">${h.needs.length}</span></div>${needs}` : ''}
-    <div class="z-label">${role.id==='fin'?'Harvest':'Tonight'}</div>
-    <div class="hero"><b>${h.hero[0]}</b><p>${h.hero[1]}</p></div>
-    <div class="z-label">Today</div><ul class="rows">${h.today.map(x=>`<li>${x}</li>`).join('')}</ul>
-    <div class="z-label">Since you last looked</div><ul class="rows">${h.since.map(x=>`<li>${x}</li>`).join('')}</ul>`;
-}
+function renderToday(){ todayView.innerHTML = HOMES[role.id](); }
 
 function go(areaId, pi){
   if (areaId === 'today' && pi === 0){ current = 'today:0'; renderToday(); show(todayView); markTab(); return; }
@@ -651,6 +916,7 @@ function setRole(id){
   role = ROLES.find(r => r.id === id) || ROLES[0];
   document.getElementById('roleSet').textContent = `Seats: ${role.seats}`;
   document.getElementById('avatar').textContent = role.av;
+  document.getElementById('sbDate').textContent = role.date;
   const names = tabsFor().map(t => t === '+' ? '+' : t === 'more' ? 'More' : t[0]).join(' · ');
   document.getElementById('hint').textContent = role.log.length
     ? `${role.set}: ${names}. The + shows only what this role can log.`
