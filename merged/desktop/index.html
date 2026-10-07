@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Blossom V2 Navigation, Desktop</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;600&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="../blossom.css">
+<style>
+html{color-scheme:light dark}body{margin:0}[hidden]{display:none!important}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
+a{color:var(--accent)}
+.wrap{max-width:1240px;margin:0 auto;padding-block:32px 64px;padding-inline:16px}
+.eyebrow{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-size:clamp(26px,3.4vw,38px);font-weight:800;line-height:1.1;margin:4px 0 0;text-wrap:balance}
+.lede{max-width:70ch;color:var(--muted);margin:8px 0 0}
+.controls{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:end;margin:22px 0 14px}
+.controls label{display:block;font:700 12px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.controls select{font:600 15px var(--display);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 12px;min-width:260px;max-width:100%}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface-2)}
+.seg button{border:0;background:transparent;font:700 13px var(--display);color:var(--muted);padding:6px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.controls .note{font-size:13px;color:var(--muted);max-width:52ch}
+
+/* browser window */
+.scroller{overflow-x:auto;border-radius:16px;box-shadow:var(--shadow)}
+.win{min-width:1040px;border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden}
+.chrome{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.chrome .dots{display:flex;gap:6px}
+.chrome .dots i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.chrome .url{flex:1;max-width:520px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px 12px;font:500 12.5px "IBM Plex Mono",ui-monospace,monospace;color:var(--muted);text-align:center}
+.chrome .url b{color:var(--ink);font-weight:600}
+.app{position:relative;font-family:"Figtree",var(--body);height:720px;display:flex;flex-direction:column;background:var(--bg)}
+
+/* top bar */
+.topbar{flex:none;display:flex;align-items:center;gap:6px;height:60px;padding:0 16px;background:var(--surface);border-bottom:1px solid var(--line);position:relative;z-index:5}
+.mark{color:var(--green-deep);display:grid;place-items:center;margin-right:2px}
+:root[data-theme="dark"] .mark{color:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mark{color:var(--accent)}}
+.tb-btn{display:inline-flex;align-items:center;gap:5px;height:38px;padding:0 9px;border:0;background:transparent;border-radius:10px;font:700 14px "Figtree";color:var(--ink);cursor:pointer;white-space:nowrap}
+.tb-btn:hover,.tb-btn[aria-expanded="true"]{background:var(--surface-2)}
+.tb-btn.on{color:var(--accent);box-shadow:inset 0 -2.5px 0 var(--accent);border-radius:10px 10px 0 0}
+.tb-btn svg.cv{width:13px;height:13px;color:var(--muted)}
+.switch{border:1px solid var(--line);margin-right:6px}
+.switch small{font-weight:600;color:var(--muted)}
+.areas{display:flex;gap:2px}
+.right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.logbtn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border:0;border-radius:999px;background:var(--green);color:#fff;font:700 13.5px "Figtree";cursor:pointer;box-shadow:0 6px 14px -4px rgba(57,181,74,.5)}
+.logbtn svg{width:16px;height:16px}
+.me{width:36px;height:36px;border-radius:50%;border:0;background:var(--accent-soft);color:var(--accent-ink);font:800 13px "Figtree";cursor:pointer}
+
+/* dropdowns */
+.pop{position:absolute;top:56px;z-index:10;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 44px -12px rgba(16,27,21,.28);padding:8px;min-width:300px}
+.pop .ph{padding:6px 10px 8px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.pop .ph b{display:block;font:800 15px "Figtree"}
+.pop .ph small{font-size:12.5px;color:var(--muted)}
+.pop button.row{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:10px;padding:8px 10px;cursor:pointer;color:var(--ink)}
+.pop button.row:hover{background:var(--surface-2)}
+.pop button.row b{display:block;font:700 14px "Figtree"}
+.pop button.row small{font-size:12.5px;color:var(--muted)}
+.pop .was{display:inline-block;font:700 10px var(--display);letter-spacing:.04em;text-transform:uppercase;background:var(--moved);color:var(--moved-ink);border-radius:6px;padding:1px 5px;margin-left:6px;vertical-align:1px}
+.pop .sep{height:1px;background:var(--line);margin:4px 6px}
+.pop .seasons{display:flex;gap:6px;padding:6px 10px}
+.pop .seasons span{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font:700 12.5px "Figtree"}
+.pop .seasons span.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.pop.log{min-width:360px}
+.pop .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:4px}
+.pop .grid button{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:10px;text-align:left;font:700 13px "Figtree";color:var(--ink);cursor:pointer}
+.pop .grid button small{display:block;font:400 11.5px var(--body);color:var(--muted);margin-top:2px}
+
+/* body */
+.body{flex:1;display:flex;min-height:0}
+.side{flex:none;width:224px;background:var(--surface);border-right:1px solid var(--line);overflow:auto;padding:10px 8px}
+.side .sw{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:8px 10px;margin-bottom:10px;font:800 14px "Figtree";color:var(--ink)}
+.side .sw small{display:block;font:600 11.5px "Figtree";color:var(--muted)}
+.side .a{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;border-radius:10px;padding:8px 10px;font:700 14px "Figtree";color:var(--ink);cursor:pointer;text-align:left}
+.side .a svg{width:18px;height:18px;color:var(--muted)}
+.side .a:hover{background:var(--surface-2)}
+.side .a.on{background:var(--accent-soft);color:var(--accent-ink)}
+.side .a.on svg{color:var(--accent-ink)}
+.side .p{display:block;width:100%;border:0;background:transparent;text-align:left;padding:6px 10px 6px 38px;font:600 13px "Figtree";color:var(--muted);border-radius:8px;cursor:pointer}
+.side .p.on{color:var(--accent);background:var(--surface-2)}
+.side .logbtn{width:100%;justify-content:center;margin:12px 0 0}
+.main{flex:1;overflow:auto;padding:22px 28px 40px;min-width:0}
+.crumb{font:600 12.5px "Figtree";color:var(--muted)}
+.ptitle{font:800 26px "Figtree";margin:2px 0 4px;letter-spacing:-.01em}
+.ptabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:12px 0 18px}
+.ptabs button{border:0;background:transparent;padding:9px 12px;font:700 14px "Figtree";color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px}
+.ptabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.ph-box{border:1.5px dashed var(--line);border-radius:16px;padding:22px;color:var(--muted);max-width:720px}
+.ph-box b{display:block;color:var(--ink);font:800 17px "Figtree";margin-bottom:4px}
+.ph-box .route{margin-top:10px;font:600 12.5px "IBM Plex Mono",monospace}
+.ph-box .was{display:inline-block;font:700 10px var(--display);letter-spacing:.04em;text-transform:uppercase;background:var(--moved);color:var(--moved-ink);border-radius:6px;padding:1px 5px;margin-left:6px;vertical-align:3px}
+
+/* Today, wide */
+.dhome{max-width:1100px}
+.dhome .z-head{font-size:28px;margin:6px 0 18px;max-width:40ch}
+.dgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start;grid-auto-flow:dense}
+.dgrid > *{margin:0!important}
+.dgrid.hashero > .frost,.dgrid.hashero > .job,.dgrid.hashero > .svc{grid-column:1;grid-row:span 6}
+.dgrid.hashero > :not(.frost):not(.job):not(.svc){grid-column:2}
+.dhome .frost .sky{padding:16px 18px 18px}
+.dhome .frost .deg{font-size:64px}
+.dhome .chart{max-height:210px}
+
+.below{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:22px}
+.below > div{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:14px 16px}
+.below h2{font:800 15px var(--display);margin:0 0 6px}
+.below p,.below ul{margin:0;font-size:14px;color:var(--muted)}
+.below ul{padding-left:18px}
+.below li{margin:0 0 4px}
+.below b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Blossom V2 · merged proposal · desktop</div>
+  <h1>The same seven areas, on a computer</h1>
+  <p class="lede">The merged navigation at desktop width. The farm switcher sits on the left, each area opens a menu of its pages, and + Log is on every screen. Pick a role, open the menus, and flip the layout to compare John's top bar with a sidebar, which is the open question. <a href="../">Phone version</a> · <a href="../../">Original nine-area proposal</a></p>
+
+  <div class="controls">
+    <div><label for="role">Look at it as</label><select id="role"></select></div>
+    <div><label>Layout</label><div class="seg" role="group" aria-label="Layout"><button type="button" id="lTop" aria-pressed="true">Top bar</button><button type="button" id="lSide" aria-pressed="false">Sidebar</button></div></div>
+    <p class="note" id="layoutNote"></p>
+  </div>
+
+  <div class="scroller">
+    <div class="win">
+      <div class="chrome"><span class="dots"><i></i><i></i><i></i></span><span class="url" id="url"></span></div>
+      <div class="app" id="app">
+        <div class="topbar" id="topbar"></div>
+        <div class="body">
+          <nav class="side" id="side" hidden></nav>
+          <main class="main" id="main"></main>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="below">
+    <div>
+      <h2>What changes from today's sidebar</h2>
+      <ul>
+        <li>19 sidebar rows in three groups become <b>7 areas</b>, each with a short menu.</li>
+        <li>The sidebar's farm card and season tile become <b>one switcher</b>.</li>
+        <li><b>+ Log</b> is always in the bar, so recording something never means hunting for a page.</li>
+        <li><b>Routes don't change.</b> Watch the address bar as you click through.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Top bar or sidebar</h2>
+      <p><b>Top bar (John):</b> more width for maps and tables, and it matches the phone's area-first model. <b>Sidebar:</b> closer to what users have today, and the pages stay visible without opening a menu. Both use the same areas, names and routes, so the choice doesn't affect anything else.</p>
+    </div>
+    <div>
+      <h2>Rules carried over</h2>
+      <ul>
+        <li>An area with one page for a role is a plain link, not a menu.</li>
+        <li>A role sees only the areas it can do something in.</li>
+        <li>Clicking the logo always goes to Today.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+const app = document.getElementById('app'), topbar = document.getElementById('topbar'), side = document.getElementById('side'), main = document.getElementById('main'), urlEl = document.getElementById('url');
+const roleSel = document.getElementById('role');
+const AREA_ICON = {today:'today', beds:'beds', apply:'apply', water:'water', harvest:'harvest', shop:'shop', reports:'reports'};
+const chev = '<svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+const plus = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+const logo = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-4-8-7-8-12a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 5-4 8-8 12z"/></svg>';
+let role = ROLES[0], layout = 'top', cur = {area:'today', i:0}, openPop = null;
+
+const roleAreas = () => AREAS.filter(a => role.areas[a.id]);
+function pagesFor(areaId){
+  const spec = role.areas[areaId]; if (!spec) return [];
+  const all = A[areaId].pages.map((p, i) => ({...p, i}));
+  return spec === 'all' ? all : all.filter(p => spec.includes(p.i));
+}
+const canSettings = () => role.id === 'farm' || role.id === 'eqf';
+
+ROLES.forEach(r => { const o = document.createElement('option'); o.value = r.id; o.textContent = `${r.name} · ${r.seats}`; roleSel.appendChild(o); });
+
+function closePop(){ if (openPop){ openPop.remove(); openPop = null; topbar.querySelectorAll('[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded','false')); } }
+function pop(anchor, html, cls=''){
+  const wasOpen = anchor.getAttribute('aria-expanded') === 'true';
+  closePop(); if (wasOpen) return null;
+  const p = document.createElement('div'); p.className = 'pop ' + cls; p.innerHTML = html;
+  app.appendChild(p);
+  const ar = anchor.getBoundingClientRect(), ap = app.getBoundingClientRect();
+  let left = ar.left - ap.left;
+  if (left + p.offsetWidth > ap.width - 12) left = ap.width - p.offsetWidth - 12;
+  p.style.left = left + 'px';
+  if (layout === 'side') p.style.top = (ar.bottom - ap.top + 4) + 'px';
+  anchor.setAttribute('aria-expanded','true'); openPop = p;
+  return p;
+}
+document.addEventListener('click', e => { if (openPop && !openPop.contains(e.target) && !e.target.closest('[aria-expanded]')) closePop(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePop(); });
+
+function switcherMenu(btn){
+  const p = pop(btn, `<div class="ph"><b>Pine Island Cranberry</b><small>Your farm</small></div>
+    <div class="seasons"><span class="on">2026</span><span>2025</span><span>2024</span><span>Earlier</span></div>
+    <div class="sep"></div>
+    ${canSettings() ? '<button type="button" class="row"><b>Farm details</b><small>Address, contracts, lists, people</small></button>' : ''}`);
+}
+function logMenu(btn){
+  const p = pop(btn, `<div class="ph"><b>Log something</b><small>What a ${role.name} can record</small></div>
+    <div class="grid">${role.log.map(k => `<button type="button">${LOGS[k][0]}<small>${LOGS[k][1]}</small></button>`).join('')}</div>`, 'log');
+  if (p) p.querySelectorAll('button').forEach(b => b.addEventListener('click', closePop));
+}
+function meMenu(btn){
+  pop(btn, `<div class="ph"><b>${role.name}</b><small>Pine Island Cranberry</small></div>
+    ${canSettings() ? '<button type="button" class="row"><b>Settings</b><small>You, farm, people, roles</small></button>' : ''}
+    <button type="button" class="row"><b>Toolbox</b></button><button type="button" class="row"><b>Help</b></button><div class="sep"></div><button type="button" class="row"><b>Log out</b></button>`);
+}
+function areaMenu(btn, a){
+  const pages = pagesFor(a.id);
+  const p = pop(btn, `<div class="ph"><b>${a.label}</b><small>${a.cap}</small></div>
+    ${pages.map(pg => `<button type="button" class="row" data-i="${pg.i}"><b>${pg.n}${pg.was?`<span class="was">was ${pg.was}</span>`:''}</b><small>${pg.d}</small></button>`).join('')}`);
+  if (p) p.querySelectorAll('button[data-i]').forEach(b => b.addEventListener('click', () => { closePop(); go(a.id, +b.dataset.i); }));
+}
+
+function renderChrome(){
+  closePop();
+  const areas = roleAreas();
+  const logBtn = role.log.length ? `<button type="button" class="logbtn" id="logBtn">${plus}Log</button>` : '';
+  if (layout === 'top'){
+    side.hidden = true;
+    topbar.innerHTML = `<button type="button" class="tb-btn mark" id="home" aria-label="Today">${logo}</button>
+      <button type="button" class="tb-btn switch" id="sw" aria-expanded="false">Pine Island Cranberry <small>· 2026</small>${chev}</button>
+      <div class="areas">${areas.map(a => {
+        const one = pagesFor(a.id).length === 1;
+        return `<button type="button" class="tb-btn${cur.area===a.id?' on':''}" data-a="${a.id}" ${one?'':'aria-expanded="false"'}>${one ? pagesFor(a.id)[0].n : a.label + chev}</button>`;
+      }).join('')}</div>
+      <div class="right">${logBtn}<button type="button" class="me" id="me" aria-expanded="false">${role.av}</button></div>`;
+    topbar.querySelectorAll('[data-a]').forEach(b => b.addEventListener('click', () => {
+      const a = A[b.dataset.a], pages = pagesFor(a.id);
+      if (pages.length === 1) go(a.id, pages[0].i); else areaMenu(b, a);
+    }));
+    topbar.querySelector('#sw').addEventListener('click', e => switcherMenu(e.currentTarget));
+  } else {
+    side.hidden = false;
+    topbar.innerHTML = `<button type="button" class="tb-btn mark" id="home" aria-label="Today">${logo}</button>
+      <span style="font:800 16px Figtree;letter-spacing:.04em;color:var(--green-deep)">blossom</span>
+      <div class="right">${logBtn}<button type="button" class="me" id="me" aria-expanded="false">${role.av}</button></div>`;
+    side.innerHTML = `<button type="button" class="sw" id="sw2">Pine Island Cranberry<small>2026 season ▾</small></button>` +
+      areas.map(a => {
+        const pages = pagesFor(a.id), on = cur.area === a.id;
+        return `<button type="button" class="a${on?' on':''}" data-a="${a.id}">${svg(AREA_ICON[a.id])}${pages.length === 1 ? pages[0].n : a.label}</button>` +
+          (on && pages.length > 1 ? pages.map(p => `<button type="button" class="p${p.i===cur.i?' on':''}" data-a="${a.id}" data-i="${p.i}">${p.n}</button>`).join('') : '');
+      }).join('');
+    side.querySelectorAll('.a').forEach(b => b.addEventListener('click', () => { const pg = pagesFor(b.dataset.a)[0]; go(b.dataset.a, pg.i); }));
+    side.querySelectorAll('.p').forEach(b => b.addEventListener('click', () => go(b.dataset.a, +b.dataset.i)));
+  }
+  topbar.querySelector('#home').addEventListener('click', () => go('today', 0));
+  topbar.querySelector('#me').addEventListener('click', e => meMenu(e.currentTarget));
+  const lb = topbar.querySelector('#logBtn'); if (lb){ lb.setAttribute('aria-expanded','false'); lb.addEventListener('click', e => logMenu(e.currentTarget)); }
+}
+
+function renderMain(){
+  const a = A[cur.area], pg = a.pages[cur.i];
+  urlEl.innerHTML = `app.blossom.ag<b>${pg.r.split(' · ')[0]}</b>`;
+  if (cur.area === 'today' && cur.i === 0){
+    main.innerHTML = `<div class="dhome">${HOMES[role.id]()}</div>`;
+    const home = main.firstElementChild;
+    const grid = document.createElement('div'); grid.className = 'dgrid';
+    [...home.children].forEach(el => { if (!el.matches('.z-date,.z-head')) grid.appendChild(el); });
+    if (grid.querySelector(':scope > .frost, :scope > .job, :scope > .svc')) grid.classList.add('hashero');
+    home.appendChild(grid);
+    return;
+  }
+  const pages = pagesFor(cur.area);
+  main.innerHTML = `<div class="crumb">${a.label}</div><div class="ptitle">${pg.n}</div><div style="color:var(--muted);font-size:14px">${a.cap}</div>
+    <div class="ptabs" role="tablist">${pages.map(p => `<button type="button" role="tab" data-i="${p.i}" aria-selected="${p.i===cur.i}">${p.n}</button>`).join('')}</div>
+    <div class="ph-box"><b>${pg.n}${pg.was?`<span class="was">was ${pg.was}</span>`:''}</b>${pg.d}<div class="route">${pg.r} · route unchanged</div></div>`;
+  main.querySelectorAll('.ptabs button').forEach(b => b.addEventListener('click', () => go(cur.area, +b.dataset.i)));
+}
+
+function go(area, i){ cur = {area, i}; renderChrome(); renderMain(); main.scrollTop = 0; }
+
+function setRole(id){
+  role = ROLES.find(r => r.id === id) || ROLES[0];
+  try{ localStorage.setItem('mergedRole', role.id); }catch(e){}
+  go('today', 0);
+}
+const lTop = document.getElementById('lTop'), lSide = document.getElementById('lSide'), note = document.getElementById('layoutNote');
+function setLayout(l){
+  layout = l; lTop.setAttribute('aria-pressed', String(l==='top')); lSide.setAttribute('aria-pressed', String(l==='side'));
+  note.textContent = l === 'top'
+    ? "John's top bar: each area opens a menu of its pages. The switcher holds the farm and the season."
+    : "Sidebar alternative: the same seven areas down the side, with the open area's pages listed underneath, close to what users have today.";
+  go(cur.area, cur.i);
+}
+lTop.addEventListener('click', () => setLayout('top'));
+lSide.addEventListener('click', () => setLayout('side'));
+roleSel.addEventListener('change', () => setRole(roleSel.value));
+let saved = null; try{ saved = localStorage.getItem('mergedRole'); }catch(e){}
+if (saved && ROLES.some(r => r.id === saved)) roleSel.value = saved;
+role = ROLES.find(r => r.id === roleSel.value) || ROLES[0];
+setLayout('top');
+</script>
+</body>
+</html>
