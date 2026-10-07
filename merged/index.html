@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Blossom V2 Navigation, Merged</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+html{color-scheme:light dark;height:100%}body{margin:0}[hidden]{display:none!important}
+:root{
+  --green-deep:#006838; --green:#39b54a; --lime:#d7df23;
+  --bg:#f4f6f1; --surface:#ffffff; --surface-2:#eef2ea;
+  --ink:#1c261f; --muted:#5f6b62; --line:#d9e0d5;
+  --accent:#006838; --accent-soft:#e3f1e5; --accent-ink:#0b4d2c;
+  --moved:#fff4d6; --moved-ink:#7a5200;
+  --john:#e6eefb; --john-ink:#1f4a8a;
+  --alert:#fdecea; --alert-ink:#9a2a1c;
+  --phone:#0f1a13; --shadow:0 18px 40px rgba(20,40,25,.18);
+  --display:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Source Sans 3",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111813; --surface:#182019; --surface-2:#1f2a21;
+    --ink:#e8eee7; --muted:#9aa89d; --line:#2b372e;
+    --accent:#5ccb6c; --accent-soft:#1f3a27; --accent-ink:#bfe9c6;
+    --moved:#3b3012; --moved-ink:#f0d48a;
+    --john:#1b2a40; --john-ink:#a9c6f2;
+    --alert:#3a1d19; --alert-ink:#f2b2a8;
+    --phone:#050906; --shadow:0 18px 40px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111813; --surface:#182019; --surface-2:#1f2a21;
+  --ink:#e8eee7; --muted:#9aa89d; --line:#2b372e;
+  --accent:#5ccb6c; --accent-soft:#1f3a27; --accent-ink:#bfe9c6;
+  --moved:#3b3012; --moved-ink:#f0d48a;
+  --john:#1b2a40; --john-ink:#a9c6f2;
+  --alert:#3a1d19; --alert-ink:#f2b2a8;
+  --phone:#050906; --shadow:0 18px 40px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
+a{color:var(--accent)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:32px 64px;padding-inline:16px}
+header.top{margin-bottom:24px}
+.eyebrow{font-family:var(--display);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-size:clamp(26px,3.4vw,38px);font-weight:800;line-height:1.1;margin:4px 0 0;text-wrap:balance}
+.lede{max-width:66ch;color:var(--muted);margin:8px 0 0}
+.layout{display:grid;grid-template-columns:400px minmax(0,1fr);gap:36px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}}
+
+/* role picker */
+.picker{margin:0 auto 14px;max-width:380px}
+.picker label{display:block;font:700 12px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.picker select{width:100%;font:600 15px var(--display);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.picker .set{font-size:13px;color:var(--muted);margin-top:6px}
+
+/* phone */
+.phone-col{position:sticky;top:16px}
+@media (max-width:860px){.phone-col{position:static}}
+.phone{width:100%;max-width:380px;margin:0 auto;aspect-ratio:380/800;background:var(--phone);border-radius:44px;padding:12px;box-shadow:var(--shadow);position:relative}
+.screen{position:absolute;inset:12px;border-radius:34px;background:var(--surface);overflow:clip;display:flex;flex-direction:column}
+.statusbar{height:40px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-family:var(--display);font-size:13px;font-weight:700}
+.statusbar span:last-child{font-weight:600;color:var(--muted)}
+.appbar{flex:none;display:flex;align-items:center;gap:10px;padding:2px 16px 10px;border-bottom:1px solid var(--line)}
+.appbar .logo{display:flex;align-items:center;color:var(--green-deep)}
+:root[data-theme="dark"] .appbar .logo{color:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .appbar .logo{color:var(--accent)}}
+.switcher{display:flex;flex-direction:column;line-height:1.15;border:0;background:transparent;text-align:left;padding:0;color:var(--ink);cursor:default}
+.switcher b{font:800 14px var(--display);display:flex;align-items:center;gap:4px}
+.switcher small{font-size:11.5px;color:var(--muted)}
+.appbar .av{margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font:800 12px var(--display)}
+.view{flex:1;overflow:auto;padding:12px 14px 16px;-webkit-overflow-scrolling:touch}
+
+/* today zones */
+.z-date{font:600 12px var(--display);color:var(--muted)}
+.z-head{font:800 19px/1.2 var(--display);margin:4px 0 12px;text-wrap:balance}
+.z-label{display:flex;align-items:center;gap:6px;font:700 11px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
+.z-label .count{background:var(--alert);color:var(--alert-ink);border-radius:999px;padding:0 7px;letter-spacing:0}
+.card{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:6px;background:var(--surface)}
+.card.primary{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.card b{display:block;font:700 14px var(--display)}
+.card p{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+.card .btn{display:inline-block;margin-top:8px;background:var(--accent);color:#fff;border-radius:10px;padding:6px 12px;font:700 12.5px var(--display)}
+:root[data-theme="dark"] .card .btn{color:#0b1a0f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .card .btn{color:#0b1a0f}}
+.card .who{font:600 11px var(--display);color:var(--accent)}
+.hero{border-radius:14px;padding:12px;background:var(--accent-soft);color:var(--accent-ink)}
+.hero b{display:block;font:800 15px var(--display)}
+.hero p{margin:2px 0 0;font-size:12.5px}
+.rows{list-style:none;margin:0;padding:0;font-size:13px}
+.rows li{padding:6px 2px;border-bottom:1px solid var(--line)}
+.rows li:last-child{border-bottom:0}
+
+/* area page */
+.back{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--accent);font:600 14px var(--display);padding:2px 0;cursor:pointer}
+.area h2{font-family:var(--display);font-size:22px;font-weight:800;margin:2px 0 0}
+.area .why{font-size:12.5px;color:var(--muted);margin:2px 0 10px}
+.pchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.pchips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 11px;font:700 13px var(--display);color:var(--ink);cursor:pointer}
+.pchips button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .pchips button[aria-selected="true"]{color:#0b1a0f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pchips button[aria-selected="true"]{color:#0b1a0f}}
+.placeholder{border:1px dashed var(--line);border-radius:14px;padding:14px;color:var(--muted);font-size:13px;min-height:120px}
+.placeholder b{display:block;color:var(--ink);font-family:var(--display);font-size:15px;margin-bottom:4px}
+.placeholder .route{font:600 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);margin-top:8px}
+.was{display:inline-block;font:700 10px var(--display);letter-spacing:.04em;text-transform:uppercase;background:var(--moved);color:var(--moved-ink);border-radius:6px;padding:1px 5px;margin-left:4px;vertical-align:1px}
+
+/* more */
+.more h2{font-family:var(--display);font-size:20px;font-weight:800;margin:0 0 8px}
+.mgroup{margin-bottom:10px}
+.mgroup h3{font:700 11px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+.mrow{display:flex;align-items:center;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 12px;margin-bottom:4px;font:700 14px var(--display);color:var(--ink);cursor:pointer}
+.mrow::after{content:"";margin-left:auto;width:7px;height:7px;border-right:2.5px solid var(--muted);border-bottom:2.5px solid var(--muted);transform:rotate(-45deg)}
+.mrow.quiet{font-weight:600;color:var(--muted)}
+
+/* tab bar */
+.tabbar{flex:none;display:grid;border-top:1px solid var(--line);padding:6px 6px 14px;background:var(--surface)}
+.tabbar button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:3px;font:600 10.5px var(--display);color:var(--muted);padding:4px 0;cursor:pointer;border-radius:10px}
+.tabbar button svg{width:22px;height:22px}
+.tabbar button[aria-current="page"]{color:var(--accent)}
+.tabbar .plus{align-self:center}
+.tabbar .plus span.dot{width:44px;height:44px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;box-shadow:0 6px 14px rgba(57,181,74,.4)}
+.tabbar .plus span.dot svg{width:24px;height:24px}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:22px 22px 0 0;padding:10px 14px 24px;box-shadow:0 -10px 30px rgba(0,0,0,.18);transform:translateY(100%);visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s}
+.sheet.open{transform:none;visibility:visible;transition:transform .25s ease,visibility 0s}
+@media (prefers-reduced-motion:reduce){.sheet{transition:none}}
+.sheet .grab{width:38px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 10px}
+.sheet h3{font-family:var(--display);font-size:16px;margin:0 0 2px}
+.sheet .sub{font-size:12px;color:var(--muted);margin:0 0 8px}
+.sheet .log{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sheet .log button{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:10px;text-align:left;font:600 13px var(--display);color:var(--ink);cursor:pointer}
+.sheet .log button small{display:block;font:400 11px var(--body);color:var(--muted);margin-top:2px}
+.scrim{position:absolute;inset:0;background:rgba(10,20,12,.35);opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.open{opacity:1;pointer-events:auto}
+.hint{text-align:center;font-size:13px;color:var(--muted);margin:14px auto 0;max-width:380px}
+
+/* right column */
+.doc h2{font-family:var(--display);font-size:20px;font-weight:800;margin:0 0 8px}
+.doc > section{margin-bottom:30px}
+.doc p{margin:0 0 12px;max-width:66ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13px;color:var(--muted);margin:0 0 14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.tree{display:grid;gap:10px}
+.node{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 12px;align-items:start}
+.node .n{font-family:var(--display);font-weight:800;font-size:22px;color:var(--accent);line-height:1;padding-top:2px;min-width:24px;font-variant-numeric:tabular-nums}
+.node .t{font-family:var(--display);font-weight:700;font-size:16px}
+.node .t small{font-weight:600;color:var(--muted);margin-left:6px;font-size:13px}
+.node .chips{grid-column:2;display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:2px 9px;background:var(--surface-2);color:var(--ink)}
+.chip.renamed{background:var(--moved);color:var(--moved-ink);border-color:transparent}
+.chip.bryan{background:var(--accent-soft);color:var(--accent-ink);border-color:transparent}
+.node .note{grid-column:2;font-size:13.5px;color:var(--muted)}
+.origin{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.origin > div{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface)}
+.origin h3{font:800 14px var(--display);margin:0 0 6px;display:flex;align-items:center;gap:8px}
+.tag{font:700 10.5px var(--display);letter-spacing:.04em;text-transform:uppercase;border-radius:6px;padding:2px 6px}
+.tag.j{background:var(--john);color:var(--john-ink)}
+.tag.b{background:var(--accent-soft);color:var(--accent-ink)}
+.tag.m{background:var(--moved);color:var(--moved-ink)}
+.origin ul{margin:0;padding-left:18px;font-size:14px}
+.origin li{margin:0 0 5px}
+.desk{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.desk .bar{display:flex;align-items:center;gap:4px 14px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--line)}
+.desk .sw{font:800 13px var(--display);padding:5px 10px;border:1px solid var(--line);border-radius:10px;white-space:nowrap}
+.desk .sw small{font-weight:600;color:var(--muted)}
+.desk .ar{font:700 13px var(--display);color:var(--muted)}
+.desk .ar.on{color:var(--accent)}
+.desk .lg{margin-left:auto;background:var(--green);color:#fff;border-radius:999px;padding:4px 12px;font:700 12.5px var(--display);white-space:nowrap}
+.desk .drop{margin:0 14px 14px;max-width:320px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:13px;background:var(--surface-2)}
+.desk .drop b{font-family:var(--display)}
+.desk .drop div{padding:3px 0}
+.desk .cap{padding:10px 14px 0;font-size:13px;color:var(--muted)}
+.rules{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.rules li{border-left:3px solid var(--accent);padding:2px 0 2px 12px;max-width:66ch}
+.rules b{font-family:var(--display)}
+.decide{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.decide ol{margin:0;padding-left:20px}
+.decide li{margin:0 0 8px;max-width:66ch}
+
+/* roles matrix */
+.roles{margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+.roles h2{font-family:var(--display);font-size:clamp(22px,2.6vw,30px);font-weight:800;margin:4px 0 8px;text-wrap:balance}
+.roles .lede{margin-bottom:16px}
+.lv{display:inline-block;min-width:44px;text-align:center;font:700 11px var(--display);letter-spacing:.02em;border-radius:6px;padding:2px 7px}
+.lv.full,.matrix td.f{background:var(--accent);color:#fff}
+.lv.edit,.matrix td.e{background:var(--accent-soft);color:var(--accent-ink)}
+.lv.view,.matrix td.v{background:var(--surface-2);color:var(--ink)}
+.lv.done,.matrix td.d{background:var(--moved);color:var(--moved-ink)}
+.lv.none,.matrix td.n{background:transparent;color:var(--muted)}
+:root[data-theme="dark"] .lv.full,:root[data-theme="dark"] .matrix td.f{color:#0b1a0f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .lv.full,:root:not([data-theme="light"]) .matrix td.f{color:#0b1a0f}}
+.matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.matrix{border-collapse:separate;border-spacing:0;min-width:1080px;width:100%;font-size:13px}
+.matrix th,.matrix td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+.matrix thead th{font:700 12.5px var(--display);color:var(--ink);background:var(--surface-2);line-height:1.2}
+.matrix thead th small,.matrix tbody th small{display:block;font:600 10.5px var(--body);color:var(--muted);margin-top:2px}
+.matrix tbody th{font:700 14px var(--display);white-space:nowrap;background:var(--surface);position:sticky;left:0;z-index:1;border-right:1px solid var(--line)}
+.matrix td{font:600 12.5px var(--display);white-space:nowrap}
+.matrix td small{display:block;font:400 11px var(--body);opacity:.85;margin-top:1px}
+.matrix td.n{text-align:center;font-weight:400}
+.matrix .legacy{box-shadow:inset 3px 0 0 var(--lime)}
+.matrix tr.bar th,.matrix tr.bar td{background:var(--surface-2);font-size:11.5px}
+.matrix tr:last-child th,.matrix tr:last-child td{border-bottom:0}
+.roles-notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:22px}
+.roles-notes h3{font-family:var(--display);font-size:15px;margin:0 0 6px}
+.roles-notes p,.roles-notes ul{margin:0;font-size:14px;color:var(--muted)}
+.roles-notes ul{padding-left:18px}
+.roles-notes li{margin:0 0 5px}
+.roles-notes b{color:var(--ink);font-family:var(--display)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Blossom V2 · merged proposal · Oct 7, 2026</div>
+    <h1>Seven areas, a log button for every role</h1>
+    <p class="lede">John's navigation (seven areas named for the work, a tab bar per kind of role, the farm and season switcher, the stable Today layout, zero route changes) merged with the Sep 21 proposal (the green log button, permission levels, approval rules and the Pine Island seat map). Pick a role and tap through the phone. <a href="../">The original nine-area proposal</a> is unchanged.</p>
+  </header>
+
+  <div class="layout">
+    <div class="phone-col">
+      <div class="picker">
+        <label for="role">Look at it as</label>
+        <select id="role"></select>
+        <div class="set" id="roleSet"></div>
+      </div>
+      <div class="phone">
+        <div class="screen">
+          <div class="statusbar"><span>6:40</span><span id="sbDate">Wed, Oct 7</span></div>
+          <div class="appbar">
+            <span class="logo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-4-8-7-8-12a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 5-4 8-8 12z"/></svg></span>
+            <button type="button" class="switcher" aria-label="Farm and season switcher"><b>Pine Island Cranberry <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></b><small>2026 season</small></button>
+            <span class="av" id="avatar">PI</span>
+          </div>
+
+          <div class="view" id="todayView"></div>
+          <div class="view area" id="areaView" hidden></div>
+          <div class="view more" id="moreView" hidden></div>
+
+          <div class="tabbar" id="tabbar"></div>
+
+          <div class="scrim" id="scrim"></div>
+          <div class="sheet" id="sheet" role="dialog" aria-label="Log something">
+            <div class="grab"></div>
+            <h3>Log something</h3>
+            <p class="sub" id="sheetSub"></p>
+            <div class="log" id="logGrid"></div>
+          </div>
+        </div>
+      </div>
+      <p class="hint" id="hint"></p>
+    </div>
+
+    <div class="doc">
+      <section>
+        <h2>Where each piece came from</h2>
+        <div class="origin">
+          <div>
+            <h3><span class="tag j">John</span> Screens</h3>
+            <ul>
+              <li>Seven areas: Today, Beds, Apply, Water, Harvest, Shop, Reports</li>
+              <li>A phone tab bar per kind of role, never padded to fill slots</li>
+              <li>Farm and season switcher; org view for multi-marsh customers</li>
+              <li>Today layout: Headline, Needs you, Hero, Today, Since you last looked</li>
+              <li>Zero route changes; old names stay findable in search</li>
+              <li>Desktop top bar with area menus</li>
+            </ul>
+          </div>
+          <div>
+            <h3><span class="tag b">Bryan</span> Doing and deciding</h3>
+            <ul>
+              <li>The green + log button, now in every tab bar, filtered to what the role may record</li>
+              <li>Permission levels: Full, Edit, View, Complete</li>
+              <li>Approval rules, which are what fill John's "Needs you"</li>
+              <li>Pine Island seats and the plan for the 106 Operator accounts</li>
+              <li>Chemigation is logged once and shows in Water and Apply</li>
+              <li>Reference lists live where they're used (Varieties in Beds, Pests in Scouting)</li>
+            </ul>
+          </div>
+          <div>
+            <h3><span class="tag m">Merge</span> Calls made here</h3>
+            <ul>
+              <li>Crop is retired: scouting and tests go to Beds, sprays and fertilizer to Apply</li>
+              <li>+ takes the centre slot, so Map goes back inside Beds as its second chip for run-the-farm roles. Field roles keep a Map tab.</li>
+              <li>Area pages use chips under the title; More uses vertical rows</li>
+              <li>+ shows only when the role can log something (Finance has none)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>The seven areas</h2>
+        <div class="legend">
+          <span><span class="chip">page</span> as in John's map</span>
+          <span><span class="chip renamed">page</span> renamed, old name kept in search</span>
+          <span><span class="chip bryan">page</span> placed by the Sep 21 proposal</span>
+        </div>
+        <div class="tree" id="tree"></div>
+      </section>
+
+      <section>
+        <h2>Desktop</h2>
+        <div class="desk">
+          <div class="bar">
+            <span class="sw">Pine Island Cranberry <small>· 2026 ▾</small></span>
+            <span class="ar on">Today</span><span class="ar">Beds</span><span class="ar">Apply</span><span class="ar">Water</span><span class="ar">Harvest</span><span class="ar">Shop</span><span class="ar">Reports</span>
+            <span class="lg">+ Log</span>
+          </div>
+          <p class="cap">John's top bar with the switcher on the left. Each area opens a menu of its pages. The + Log button sits at the right on every page.</p>
+          <div class="drop"><b>Apply</b><div>Records</div><div>Spray report <span class="was">was PUR transfer</span></div><div>Applicators</div><div>Products and limits</div></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Rules</h2>
+        <ul class="rules">
+          <li><b>One page, one name, one place.</b> Every current page lands in exactly one area. URLs don't change.</li>
+          <li><b>A role sees only the areas it can do something in.</b> The permission level decides it, so a page is never shown to someone who can't open it.</li>
+          <li><b>The home is called Today, and everyone lands there.</b> Same zones, same places. Only the hero and the details change by role, season and situation, and a situation (a frost night, a failed pump) outranks the season.</li>
+          <li><b>Logging is a button, not a destination.</b> The + opens the things this role records. Menus are for looking things up.</li>
+          <li><b>Never show 0, N/A or an empty chart.</b> Hide it or say the next-best true thing. At most one setup suggestion per screen.</li>
+          <li><b>Needs you only holds what this person can approve.</b> It's driven by the approval rules below.</li>
+        </ul>
+      </section>
+
+      <section>
+        <div class="decide">
+          <h2>Still to decide with John</h2>
+          <ol>
+            <li><b>Top bar or sidebar on desktop.</b> A sidebar that expands the current area's pages inline would cut the change for today's users the most. The top bar gives more width to maps and tables.</li>
+            <li><b>Map for run-the-farm roles.</b> It's merged as a chip inside Beds so + can sit in the centre. The alternative is Today · Beds · + · Map · More, which puts Apply in More.</li>
+            <li><b>Rainfall.</b> The Sep 21 proposal put it in Weather; John keeps it in Water at /water/rainfall. It's merged under Water to keep the routes.</li>
+            <li><b>Timing.</b> Ship between January and March, not during spray season or harvest. Rework the Help Center once the labels are final.</li>
+          </ol>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <section class="roles" id="roles">
+    <div class="eyebrow">Who sees what</div>
+    <h2>Roles across the seven areas</h2>
+    <p class="lede">The Sep 21 matrix re-keyed to John's areas. Scouting and tests moved from Crop to Beds, and applications from Crop to Apply. The last row shows the phone tab bar each seat gets. Operator is the legacy app1 role that 106 accounts still hold.</p>
+    <div class="legend">
+      <span><span class="lv full">Full</span> create, edit, delete, approve work orders</span>
+      <span><span class="lv edit">Edit</span> create and edit, log entries, no approve or delete</span>
+      <span><span class="lv view">View</span> read only</span>
+      <span><span class="lv done">Complete</span> finish orders assigned to you</span>
+      <span><span class="lv none">·</span> no access, area hidden</span>
+    </div>
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th scope="col">Area</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Operations Mgr</th>
+            <th scope="col">Crop Mgr</th>
+            <th scope="col">Equipment &amp; Building Mgr</th>
+            <th scope="col">Finance Mgr</th>
+            <th scope="col">Admin</th>
+            <th scope="col" class="legacy">Operator<small>legacy · 106 users</small></th>
+            <th scope="col">Application Foreman</th>
+            <th scope="col">Equipment Foreman</th>
+            <th scope="col">Applicator</th>
+            <th scope="col">Mechanic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Today<small>work orders, calendar, weather</small></th><td class="f">Full</td><td class="f">Full</td><td class="f">Full</td><td class="e">Edit</td><td class="v">View</td><td class="e">Edit</td><td class="f legacy">Full</td><td class="v">View<small>+ my jobs</small></td><td class="v">View</td><td class="v">View<small>+ my jobs</small></td><td class="v">View<small>+ my jobs</small></td></tr>
+          <tr><th scope="row">Beds<small>map, scouting, tests, sanding</small></th><td class="f">Full</td><td class="f">Full</td><td class="f">Full</td><td class="v">View</td><td class="v">View</td><td class="e">Edit</td><td class="v legacy">View<small>scouting view only</small></td><td class="e">Edit<small>scouting and tests</small></td><td class="n">·</td><td class="v">View</td><td class="n">·</td></tr>
+          <tr><th scope="row">Apply<small>records, spray report, products</small></th><td class="f">Full</td><td class="f">Full</td><td class="f">Full</td><td class="v">View</td><td class="v">View</td><td class="e">Edit</td><td class="f legacy">Full</td><td class="e">Edit<small>+ dispatch</small></td><td class="n">·</td><td class="d">Complete</td><td class="n">·</td></tr>
+          <tr><th scope="row">Water</th><td class="f">Full</td><td class="f">Full</td><td class="f">Full</td><td class="v">View</td><td class="v">View</td><td class="e">Edit</td><td class="f legacy">Full</td><td class="v">View</td><td class="n">·</td><td class="d">Complete</td><td class="n">·</td></tr>
+          <tr><th scope="row">Harvest</th><td class="f">Full</td><td class="f">Full</td><td class="e">Edit</td><td class="n">·</td><td class="v">View</td><td class="e">Edit</td><td class="n legacy">·</td><td class="n">·</td><td class="n">·</td><td class="n">·</td><td class="n">·</td></tr>
+          <tr><th scope="row">Shop<small>was Equipment</small></th><td class="v">View<small>+ request</small></td><td class="f">Full</td><td class="v">View<small>+ request</small></td><td class="f">Full</td><td class="v">View</td><td class="e">Edit</td><td class="f legacy">Full<small>no delete</small></td><td class="n">·</td><td class="f">Full</td><td class="d">Complete</td><td class="d">Complete</td></tr>
+          <tr><th scope="row">Reports<small>was Data</small></th><td class="f">Full</td><td class="f">Full</td><td class="v">View</td><td class="v">View</td><td class="f">Full</td><td class="v">View<small>+ export</small></td><td class="n legacy">·</td><td class="n">·</td><td class="n">·</td><td class="n">·</td><td class="n">·</td></tr>
+          <tr><th scope="row">Settings<small>avatar menu</small></th><td class="f">Full</td><td class="f">Full</td><td class="n">·</td><td class="v">Mechanics roster</td><td class="n">·</td><td class="n">·</td><td class="n legacy">·</td><td class="n">·</td><td class="v">Mechanics roster</td><td class="n">·</td><td class="n">·</td></tr>
+          <tr class="bar"><th scope="row">Phone tab bar</th><td>Run the farm</td><td>Run the farm</td><td>Run the farm</td><td>Shop · Maintenance</td><td>Office · no +</td><td>Office</td><td class="legacy">Run the farm</td><td>Run the farm</td><td>Shop · Maintenance</td><td>Field</td><td>Shop · Jobs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="roles-notes">
+      <div>
+        <h3>Who approves work orders (fills Needs you)</h3>
+        <p>Crop Manager approves spray, nutrient, water and vine orders. Equipment &amp; Building Manager approves equipment orders. Operations Manager and Owner approve anything. Operator approves its own, as today. Nobody else does, including Admin. An approval lands in that person's Needs you on Today, with the one button that clears it.</p>
+      </div>
+      <div>
+        <h3>How the seats map to the built-in roles</h3>
+        <ul>
+          <li><b>Owner</b> is Organization Admin once BLO-842 makes it a true superset of Farm admin.</li>
+          <li><b>Operations Manager</b> is Farm admin.</li>
+          <li><b>Crop Manager</b> is Operator with harvest yields added and equipment trimmed to request-only.</li>
+          <li><b>Equipment &amp; Building Manager</b> is Equipment Foreman with delete, Reports view and Calendar edit.</li>
+          <li><b>Finance Manager</b> and <b>Admin</b> are new seats; John's Accountant and Office Manager tab bars fit them.</li>
+          <li><b>Application Foreman</b>, Equipment Foreman, Applicator and Mechanic stay as documented.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Still to settle</h3>
+        <ul>
+          <li>Whether Finance Manager sees the spray report (PUR). It stays in Apply as a regulatory record.</li>
+          <li>Whether Admin may upload PUR and import soil tests without a manager signing off.</li>
+          <li>Moving the 106 Operator accounts is a conversation with each farm.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const I = {
+  today:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  beds:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/>',
+  apply:'<path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/>',
+  water:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+  harvest:'<path d="M4 10h16l-1.5 9h-13z"/><path d="M8 10l2-5M16 10l-2-5"/>',
+  shop:'<path d="M14.7 6.3a4 4 0 0 0 5 5L13 18a2.1 2.1 0 0 1-3-3l6.7-6.7z"/><path d="M4 20l4-4"/>',
+  reports:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  map:'<path d="M9 4l6 2 6-2v14l-6 2-6-2-6 2V6z"/><path d="M9 4v14M15 6v14"/>',
+  jobs:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12l2 2 4-4"/>',
+  machines:'<circle cx="7" cy="17" r="3"/><circle cx="18" cy="17" r="2"/><path d="M4 14V8h7l3 6h6M11 8V5"/>',
+  orders:'<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
+  people:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 11a3 3 0 1 0 0-6M21 20c0-2.5-1.5-4.6-3.6-5.5"/>',
+  more:'<path d="M4 7h16M4 12h16M4 17h16"/>'
+};
+const svg = (k, sw=2) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg>`;
+
+// k: '' as John, 'renamed' (was), 'bryan' (placed by Sep 21 proposal)
+const AREAS = [
+  {id:'today', label:'Today', cap:'Run the day', why:'The home, plus the pages for running the day. Calendar and Weather were top-level in the Sep 21 proposal.', pages:[
+    {n:'Today', r:'/dashboard', was:'Dashboard', k:'renamed', d:'Headline, Needs you, Hero, Today, Since you last looked.'},
+    {n:'Work orders', r:'/management', was:'Management', k:'renamed', d:'Every order, by day and crew.'},
+    {n:'My jobs', r:'/applications · /jobs', k:'', d:'Orders assigned to me, start to finish.'},
+    {n:'Calendar', r:'/calendar', k:'', d:'Everything scheduled across all areas.'},
+    {n:'Weather', r:'/weather', k:'', d:'Tabs: Forecast, Frost. Spray windows from wind.'}]},
+  {id:'beds', label:'Beds', cap:'The beds and how the crop is doing', why:'Scouting and tests move here from the retired Crop area. Varieties stay with Beds as in the Sep 21 proposal.', pages:[
+    {n:'Beds', r:'/beds', k:'', d:'Tabs: Beds, Blocks, Units, Varieties.'},
+    {n:'Map', r:'/map', k:'bryan', d:'Tap a bed on the ground to open it. A chip here, not a tab, for run-the-farm roles.'},
+    {n:'Scouting', r:'/scoutingReports', k:'', d:'Tabs: Reports, Trends, Traps, Pests list.'},
+    {n:'Soil and tissue tests', r:'/soilTests · /tissueTests', was:'Tests', k:'renamed', d:'By list or periodic table.'},
+    {n:'Sanding and pruning', r:'/sanding', was:'Vines', k:'renamed', d:'Sanding, pruning and mowing by bed.'}]},
+  {id:'apply', label:'Apply', cap:'Spray and fertilizer, order to record', why:'Applications only. Chemigation is logged once and appears here and in Water.', pages:[
+    {n:'Records', r:'/applicationLedger', was:'Applications', k:'renamed', d:'Tabs: All, Spray, Fertilizer.'},
+    {n:'Spray report', r:'/purUpload', was:'PUR transfer', k:'renamed', d:'Only where a handler takes one.'},
+    {n:'Applicators', r:'/applicators', k:'', d:'Who may spray, and when licenses expire.'},
+    {n:'Products and limits', r:'/settings/reference/products', k:'', d:'Out of Settings ▸ Reference.'}]},
+  {id:'water', label:'Water', cap:'Irrigation, frost, floods and pumps', why:'Every water event stays here.', pages:[
+    {n:'Water events', r:'/water', k:'', d:'Sprinkler, flood and pump runs. Chemigation also shows in Apply.'},
+    {n:'Pumps', r:'/pumps', k:'', d:'Pump list with meter readings.'},
+    {n:'Sprinkler lines', r:'/water/sprinklers', k:'', d:'Sets and the beds they cover.'},
+    {n:'Rainfall', r:'/water/rainfall', k:'', d:'Rain gauge log.'}]},
+  {id:'harvest', label:'Harvest', cap:'Bring the crop in', why:'Unchanged apart from names.', pages:[
+    {n:'Progress', r:'/harvest', was:'Harvest dashboard', k:'renamed', d:'Percent harvested and barrels to date.'},
+    {n:'Deliveries', r:'/deliveries', k:'', d:'Loads from your handler, with quality.'},
+    {n:'Yields', r:'/manualYield', k:'', d:'Barrels per bed, entered by hand.'}]},
+  {id:'shop', label:'Shop', cap:'Keep the machines running', why:'Was Equipment in the Sep 21 proposal.', pages:[
+    {n:'Maintenance', r:'/maintenance', k:'', d:'Tabs: Orders and service, Service due.'},
+    {n:'Machines', r:'/equipment', was:'Equipment', k:'renamed', d:'Tabs: Machines, Groups.'},
+    {n:'Mechanics', r:'/mechanics', k:'', d:'Mechanics roster.'}]},
+  {id:'reports', label:'Reports', cap:'Report and export', why:'Was Data in the Sep 21 proposal. The spray report stays in Apply.', pages:[
+    {n:'Reports', r:'/reports', k:'', d:'Printable and exportable reports.'},
+    {n:'Charts', r:'/dashboard/data', was:'Data dashboard', k:'renamed', d:'Yield by year, barrels per acre by variety.'}]}
+];
+const A = Object.fromEntries(AREAS.map(a => [a.id, a]));
+
+const LOGS = {
+  scout:['Scouting report','Sweep counts by bed'],
+  apply:['Application','Product, rate, beds, method'],
+  water:['Water run','Irrigation, frost or flood'],
+  sand:['Sanding or pruning','By bed'],
+  yield:['Harvest yield','Barrels by bed'],
+  maint:['Maintenance','Service or work order'],
+  finish:['Finish my job','Start, stop, amounts used'],
+  issue:['Machine problem','Report it to the shop'],
+  hours:['Meter hours','Hours or miles by machine'],
+  service:['Service done','Close a maintenance order']
+};
+
+// tab: [label, icon, area, pageIndex]
+const ROLES = [
+  {id:'farm', name:'Crop Manager', seats:'Owner, Operations Mgr, Crop Mgr, Operator, Application Foreman', set:'Run the farm', av:'CM',
+   tabs:[['Today','today','today',0],'+',['Apply','apply','apply',0],'more'], beds:true,
+   areas:{today:[0,1,3,4],beds:'all',apply:'all',water:'all',harvest:'all',shop:[1],reports:'all'},
+   log:['scout','apply','water','sand','yield','maint'],
+   home:{head:'Frost tonight, 27°F at 5 AM. A spray order waits on your approval.',
+     needs:[{t:'Approve: Altacor on Long Bog',s:'Requested 5:52 AM · Work order 214',btn:'Approve',who:'Waiting on you'},{t:'Record missing a license number',s:'Apply ▸ Records · Aug 28',btn:'Fix'}],
+     hero:['Tonight\'s frost plan','Sprinklers on 12 beds by 10:45 PM. Pump P3 back from service by 10 AM.'],
+     today:['Harvest crew on Long Bog, 7 AM','Pump P3 service, 8 to 10 AM','Fertilizer on North Marsh, 2 PM'],
+     since:['Tissue results in: 3 beds low on nitrogen','2 scouting reports filed']}},
+  {id:'field', name:'Applicator', seats:'Applicator, Field Applicator', set:'Field', av:'AP',
+   tabs:[['Today','today','today',0],['Jobs','jobs','today',2],'+',['Map','map','beds',1],'more'],
+   areas:{today:[0,2,3,4],beds:[0,1],apply:[0],water:[0],shop:[1]},
+   log:['finish','water','issue'],
+   home:{head:'Tonight\'s Altacor is a go. Post the signs by 8:45 PM.',
+     needs:[{t:'Start job: Altacor on Long Bog',s:'LB-1 to LB-5 · 46.3 ac · Work order 214',btn:'Start',who:'Your next job'}],
+     hero:['Go / no-go','Wind 4 mph, no rain for 12 h, bees moved off LB-3.'],
+     today:['Mix at the shed, 8 PM','Re-entry signs up by 8:45 PM'],
+     since:['Last night\'s job closed by the Crop Manager']}},
+  {id:'mech', name:'Mechanic', seats:'Mechanic', set:'Shop (Jobs)', av:'ME',
+   tabs:[['Today','today','today',0],['Jobs','jobs','today',2],'+',['Machines','machines','shop',1],'more'],
+   areas:{today:[0,2],shop:[0,1]},
+   log:['service','hours','issue'],
+   home:{head:'Frost tonight, and Pump P3 is 12 days overdue. Service it this morning.',
+     needs:[{t:'250-hour service: Pump P3',s:'Feeds LB-1, LB-2 and LB-5 on tonight\'s frost',btn:'Start',who:'Your next job'}],
+     hero:['3 machines need you this week','P3 overdue, loader due Friday, ATV tire flagged.'],
+     today:['P3 service, 8 to 10 AM','Loader grease, after lunch'],
+     since:['Applicator flagged a sprayer nozzle']}},
+  {id:'eqf', name:'Equipment Foreman', seats:'Equipment Foreman, Equipment & Building Mgr', set:'Shop (Maintenance)', av:'EF',
+   tabs:[['Today','today','today',0],['Maintenance','shop','shop',0],'+',['Machines','machines','shop',1],'more'],
+   areas:{today:[0,3],shop:'all',reports:[0]},
+   log:['maint','hours','issue'],
+   home:{head:'Pump P3 has to be back before tonight\'s frost.',
+     needs:[{t:'Approve: replace sprayer nozzles',s:'Requested by the applicator · $140',btn:'Approve',who:'Waiting on you'}],
+     hero:['Service due','P3 12 days over, loader in 3 days, 2 trucks this month.'],
+     today:['Mechanic on P3, 8 to 10 AM','Parts pickup in town, 1 PM'],
+     since:['1 machine problem reported','2 services closed']}},
+  {id:'admin', name:'Admin', seats:'Admin seat, Office Manager', set:'Office', av:'AD',
+   tabs:[['Today','today','today',0],['Work orders','orders','today',1],'+',['Reports','reports','reports',0],'more'],
+   areas:{today:[0,1,3,4],beds:'all',apply:'all',water:'all',harvest:'all',shop:'all',reports:'all'},
+   log:['scout','apply','water','sand','yield','maint'],
+   home:{head:'Two records need fixing before the spray report.',
+     needs:[{t:'Record missing a license number',s:'Apply ▸ Records · Aug 28',btn:'Fix'},{t:'Delivery ticket without a bed',s:'Harvest ▸ Deliveries · Oct 6',btn:'Fix'}],
+     hero:['Spray report: 31 of 33 records complete','Due Jan 31. You can fix records; a manager approves.'],
+     today:['Enter yesterday\'s yields','Upload this week\'s soil tests'],
+     since:['4 new work orders','1 delivery imported']}},
+  {id:'fin', name:'Finance Manager', seats:'Finance Mgr, Accountant', set:'Office (no +)', av:'FM',
+   tabs:[['Today','today','today',0],['Reports','reports','reports',0],'more'],
+   areas:{today:[0],beds:[0],apply:[0],water:[0],harvest:'all',shop:[1],reports:'all'},
+   log:[],
+   home:{head:'Harvest is 43% in. Deliveries are tracking 6% ahead of last year.',
+     needs:[],
+     hero:['Barrels to date','43% harvested. Exports ready for the October close.'],
+     today:['Delivery statement from the handler expected'],
+     since:['12 loads delivered','Charts updated overnight']}}
+];
+
+const roleSel = document.getElementById('role');
+ROLES.forEach(r => { const o = document.createElement('option'); o.value = r.id; o.textContent = `${r.name} · ${r.set}`; roleSel.appendChild(o); });
+
+const todayView = document.getElementById('todayView'), areaView = document.getElementById('areaView'), moreView = document.getElementById('moreView');
+const tabbar = document.getElementById('tabbar');
+let role = ROLES[0], current = 'today:0';
+
+function pagesFor(areaId){
+  const spec = role.areas[areaId]; if (!spec) return [];
+  const all = A[areaId].pages.map((p, i) => ({...p, i}));
+  return spec === 'all' ? all : all.filter(p => spec.includes(p.i));
+}
+function tabsFor(){
+  const t = role.tabs.slice();
+  if (role.beds) t.splice(1, 0, ['Beds','beds','beds',0]);
+  return t;
+}
+function show(v){ [todayView, areaView, moreView].forEach(x => x.hidden = x !== v); v.scrollTop = 0; }
+
+function renderTabbar(){
+  const t = tabsFor();
+  tabbar.style.gridTemplateColumns = `repeat(${t.length},1fr)`;
+  tabbar.innerHTML = '';
+  t.forEach(tab => {
+    const b = document.createElement('button'); b.type = 'button';
+    if (tab === '+'){
+      b.className = 'plus'; b.setAttribute('aria-label','Log something');
+      b.innerHTML = `<span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>`;
+      b.addEventListener('click', () => toggleSheet(!sheet.classList.contains('open')));
+    } else if (tab === 'more'){
+      b.dataset.key = 'more'; b.innerHTML = svg('more') + 'More';
+      b.addEventListener('click', openMore);
+    } else {
+      const [label, icon, area, pi] = tab;
+      b.dataset.key = `${area}:${pi}`; b.innerHTML = svg(icon) + label;
+      b.addEventListener('click', () => go(area, pi));
+    }
+    tabbar.appendChild(b);
+  });
+  markTab();
+}
+function markTab(){
+  tabbar.querySelectorAll('button[data-key]').forEach(b => {
+    const k = b.dataset.key;
+    const on = k === current || (k.endsWith(':0') && current.startsWith(k.split(':')[0] + ':') && !tabbar.querySelector(`[data-key="${current}"]`));
+    if (on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');
+  });
+}
+
+function renderToday(){
+  const h = role.home;
+  const needs = h.needs.length
+    ? h.needs.map((n, i) => `<div class="card${i===0?' primary':''}">${n.who?`<span class="who">${n.who}</span>`:''}<b>${n.t}</b><p>${n.s}</p>${i===0?`<span class="btn">${n.btn}</span>`:''}</div>`).join('')
+    : '';
+  todayView.innerHTML = `
+    <div class="z-date">Wed, Oct 7 · 38°F, clear</div>
+    <div class="z-head">${h.head}</div>
+    ${h.needs.length ? `<div class="z-label">Needs you <span class="count">${h.needs.length}</span></div>${needs}` : ''}
+    <div class="z-label">${role.id==='fin'?'Harvest':'Tonight'}</div>
+    <div class="hero"><b>${h.hero[0]}</b><p>${h.hero[1]}</p></div>
+    <div class="z-label">Today</div><ul class="rows">${h.today.map(x=>`<li>${x}</li>`).join('')}</ul>
+    <div class="z-label">Since you last looked</div><ul class="rows">${h.since.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+}
+
+function go(areaId, pi){
+  if (areaId === 'today' && pi === 0){ current = 'today:0'; renderToday(); show(todayView); markTab(); return; }
+  const a = A[areaId], pages = pagesFor(areaId);
+  let sel = pages.find(p => p.i === pi) || pages[0];
+  current = `${areaId}:${sel.i}`;
+  const draw = () => {
+    areaView.innerHTML = `
+      <button type="button" class="back">${'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>'}Today</button>
+      <h2>${a.label}</h2><p class="why">${a.cap}</p>
+      ${pages.length > 1 ? `<div class="pchips" role="tablist">${pages.map(p => `<button type="button" role="tab" data-i="${p.i}" aria-selected="${p.i===sel.i}">${p.n}</button>`).join('')}</div>` : ''}
+      <div class="placeholder"><b>${sel.n}${sel.was?`<span class="was">was ${sel.was}</span>`:''}</b>${sel.d}<div class="route">${sel.r} · route unchanged</div></div>`;
+    areaView.querySelector('.back').addEventListener('click', () => go('today', 0));
+    areaView.querySelectorAll('.pchips button').forEach(b => b.addEventListener('click', () => {
+      sel = pages.find(p => p.i === +b.dataset.i); current = `${areaId}:${sel.i}`; draw(); markTab();
+    }));
+  };
+  draw(); show(areaView); markTab();
+}
+
+function openMore(){
+  current = 'more';
+  const tabKeys = new Set(tabsFor().filter(t => Array.isArray(t)).map(t => `${t[2]}:${t[3]}`));
+  let html = '<h2>More</h2>';
+  AREAS.forEach(a => {
+    const ps = pagesFor(a.id).filter(p => !tabKeys.has(`${a.id}:${p.i}`));
+    if (!ps.length) return;
+    html += `<div class="mgroup"><h3>${a.label}</h3>${ps.map(p => `<button type="button" class="mrow" data-a="${a.id}" data-i="${p.i}">${p.n}</button>`).join('')}</div>`;
+  });
+  html += `<div class="mgroup"><h3>Account</h3><button type="button" class="mrow quiet">Toolbox</button>${role.id==='farm'||role.id==='eqf'?'<button type="button" class="mrow quiet">Settings</button>':''}<button type="button" class="mrow quiet">Help</button></div>`;
+  moreView.innerHTML = html;
+  moreView.querySelectorAll('.mrow[data-a]').forEach(b => b.addEventListener('click', () => go(b.dataset.a, +b.dataset.i)));
+  show(moreView); markTab();
+}
+
+const sheet = document.getElementById('sheet'), scrim = document.getElementById('scrim');
+function toggleSheet(on){ sheet.classList.toggle('open', on); scrim.classList.toggle('open', on); }
+scrim.addEventListener('click', () => toggleSheet(false));
+function renderSheet(){
+  document.getElementById('sheetSub').textContent = `What a ${role.name} can record`;
+  const g = document.getElementById('logGrid');
+  g.innerHTML = role.log.map(k => `<button type="button">${LOGS[k][0]}<small>${LOGS[k][1]}</small></button>`).join('');
+  g.querySelectorAll('button').forEach(b => b.addEventListener('click', () => toggleSheet(false)));
+}
+
+function setRole(id){
+  role = ROLES.find(r => r.id === id) || ROLES[0];
+  document.getElementById('roleSet').textContent = `Seats: ${role.seats}`;
+  document.getElementById('avatar').textContent = role.av;
+  const names = tabsFor().map(t => t === '+' ? '+' : t === 'more' ? 'More' : t[0]).join(' · ');
+  document.getElementById('hint').textContent = role.log.length
+    ? `${role.set}: ${names}. The + shows only what this role can log.`
+    : `${role.set}: ${names}. No + because this role can't log anything.`;
+  toggleSheet(false); renderSheet(); renderTabbar(); go('today', 0);
+  try{ localStorage.setItem('mergedRole', role.id); }catch(e){}
+}
+roleSel.addEventListener('change', () => setRole(roleSel.value));
+let saved = null; try{ saved = localStorage.getItem('mergedRole'); }catch(e){}
+if (saved && ROLES.some(r => r.id === saved)) roleSel.value = saved;
+setRole(roleSel.value);
+
+// tree
+const tree = document.getElementById('tree');
+AREAS.forEach((a, i) => {
+  const n = document.createElement('div'); n.className = 'node';
+  const chips = a.pages.map(p => `<span class="chip ${p.k}" title="${p.r}">${p.n}${p.was?` <small>(was ${p.was})</small>`:''}</span>`).join('');
+  n.innerHTML = `<div class="n">${i+1}</div><div class="t">${a.label}<small>${a.cap}</small></div><div class="chips">${chips}</div><div class="note">${a.why}</div>`;
+  tree.appendChild(n);
+});
+</script>
+</body>
+</html>
